@@ -14,7 +14,7 @@ $config = [
     'modules' => [
         'gridview' => [
             'class' => '\kartik\grid\Module',
-          ],
+        ],
     ],
     'components' => [
         'request' => [
@@ -51,9 +51,26 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
+            'rules' => [],
+        ],
+    ],
+    // this class use for force login to all controller. Usefull quiet enough
+    // this function work only in login placed in site controller. FOr other login controller/action, change denyCallback access
+    'as beforeRequest' => [
+        'class' => 'yii\filters\AccessControl',
+        'rules' => [
+            [
+                'allow' => true,
+                'actions' => ['login', 'qr', 'signup'],
+            ],
+            [
+                'allow' => true,
+                'roles' => ['@'],
             ],
         ],
+        'denyCallback' => function () {
+            return Yii::$app->response->redirect(['site/login']);
+        },
     ],
     'params' => $params,
 ];

@@ -38,6 +38,20 @@ class RefKegiatan extends \yii\db\ActiveRecord
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        // ...custom code here...
+        if ($this->kd_ubah == JenisUbah::KD_UBAH_NAMA) {
+            $refKegiatanLama = RefKegiatanLama::findOne(['kd_urusan' => $this->kd_urusan, 'kd_bidang' => $this->kd_bidang, 'kd_prog' => $this->kd_prog, 'kd_keg' => $this->kd_keg]);
+            if ($refKegiatanLama) $this->id_lama = $refKegiatanLama->id;
+        }
+        return true;
+    }
+
     /**
      * {@inheritdoc}
      */

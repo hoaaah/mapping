@@ -17,6 +17,7 @@ use Yii;
  */
 class RefProgram extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -35,6 +36,20 @@ class RefProgram extends \yii\db\ActiveRecord
             [['kd_urusan', 'kd_bidang', 'kd_prog', 'kd_ubah', 'id_lama'], 'integer'],
             [['ket_program'], 'string'],
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        // ...custom code here...
+        if ($this->kd_ubah == JenisUbah::KD_UBAH_NAMA) {
+            $refProgramLama = RefProgramLama::findOne(['kd_urusan' => $this->kd_urusan, 'kd_bidang' => $this->kd_bidang, 'kd_prog' => $this->kd_prog]);
+            if ($refProgramLama) $this->id_lama = $refProgramLama->id;
+        }
+        return true;
     }
 
     /**

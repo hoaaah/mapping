@@ -12,6 +12,12 @@ use Yii;
  */
 class JenisUbah extends \yii\db\ActiveRecord
 {
+
+    const KD_UBAH_TAMBAH = 1;
+    const KD_UBAH_KODE = 2;
+    const KD_UBAH_NAMA = 3;
+    const KD_UBAH_HAPUS = 4;
+
     /**
      * {@inheritdoc}
      */

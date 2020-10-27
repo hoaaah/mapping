@@ -33,6 +33,7 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-3">
         <?= $form->field($model, 'kd_bidang')->widget(DepDrop::classname(), [
+            'data' => $model->kd_bidang ? ArrayHelper::map(RefBidang::findAll(['kd_urusan' => $model->kd_urusan]), 'kd_bidang', 'nm_bidang') : null,
             'options' => ['id' => 'subcat-id'],
             'type' => DepDrop::TYPE_SELECT2,
             'pluginOptions' => [

@@ -1,5 +1,6 @@
 <?php
 
+use app\models\RefBidang;
 use app\models\RefUrusan;
 use kartik\depdrop\DepDrop;
 use kartik\select2\Select2;

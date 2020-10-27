@@ -59,12 +59,12 @@ class RefProgramSearch extends RefProgram
             'id' => $this->id,
             'kd_ubah' => $this->kd_ubah,
             'id_lama' => $this->id_lama,
+            'kd_urusan' => $this->kd_urusan,
+            'kd_bidang' => $this->kd_bidang,
+            'kd_prog' => $this->kd_prog,
         ]);
 
-        $query->andFilterWhere(['like', 'kd_urusan', $this->kd_urusan])
-            ->andFilterWhere(['like', 'kd_bidang', $this->kd_bidang])
-            ->andFilterWhere(['like', 'kd_prog', $this->kd_prog])
-            ->andFilterWhere(['like', 'ket_program', $this->ket_program]);
+        $query->andFilterWhere(['like', 'ket_program', $this->ket_program]);
 
         return $dataProvider;
     }

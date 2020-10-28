@@ -68,4 +68,8 @@ class RefKegiatan extends \yii\db\ActiveRecord
             'id_lama' => 'Id Lama',
         ];
     }
+
+    public function getProgram(){
+        return $this->hasOne(RefProgram::class, ['kd_urusan' => 'kd_urusan', 'kd_bidang' => 'kd_bidang', 'kd_prog' => 'kd_prog']);
+    }
 }

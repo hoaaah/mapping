@@ -13,10 +13,21 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id',
-    // ],
+    [
+        'label'=>'Program',
+        'value'=> function($model){
+            return $model->program->kd_urusan . "." . $model->program->kd_bidang  . "." . $model->program->kd_prog . " " . $model->program->ket_program;
+        },
+        'group' => true,
+    ],
+    [
+        'label'=>'Program Lama',
+        'value'=> function($model){
+            if($model->program->programLama) return $model->program->programLama->kd_urusan . "." . $model->program->programLama->kd_bidang  . "." . $model->program->programLama->kd_prog . " " . $model->program->programLama->ket_program;
+            return '';
+        },
+        'group' => true,
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'ket_kegiatan',

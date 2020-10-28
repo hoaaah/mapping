@@ -67,4 +67,8 @@ class RefProgram extends \yii\db\ActiveRecord
             'id_lama' => 'Id Lama',
         ];
     }
+
+    public function getProgramLama(){
+        return $this->hasOne(RefProgramLama::class, ['id' => 'id_lama']);
+    }
 }

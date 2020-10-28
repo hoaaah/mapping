@@ -32,6 +32,10 @@ return [
         'value' => function($model){
             $klasifikasiBaru = RefProgram::find()->where(['id_lama' => $model->id])->one();
             if($klasifikasiBaru) return $klasifikasiBaru->kd_urusan . "." . $klasifikasiBaru->kd_bidang  . "." . $klasifikasiBaru->kd_prog . " " . $klasifikasiBaru->ket_program;
+            if(!$klasifikasiBaru){
+                $klasifikasiSama = RefProgram::find()->where(['ket_program' => $model->ket_program])->one();
+                if($klasifikasiSama) return $klasifikasiSama->kd_urusan . "." . $klasifikasiSama->kd_bidang  . "." . $klasifikasiSama->kd_prog . " " . $klasifikasiSama->ket_program;
+            }
             return '';
         }
     ],

@@ -40,6 +40,7 @@ class KegiatanHapusController extends Controller
     {    
         $searchModel = new RefKegiatanLamaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = 100;
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -30,6 +30,10 @@ return [
         'value' => function($model){
             $klasifikasiBaru = RefKegiatan::find()->where(['id_lama' => $model->id])->one();
             if($klasifikasiBaru) return $klasifikasiBaru->kd_urusan . "." . $klasifikasiBaru->kd_bidang  . "." . $klasifikasiBaru->kd_prog  . "." . $klasifikasiBaru->kd_keg . " " . $klasifikasiBaru->ket_kegiatan;
+            if(!$klasifikasiBaru){
+                $klasifikasiSama = RefKegiatan::find()->where(['ket_kegiatan' => $model->ket_kegiatan])->one();
+                if($klasifikasiSama) return $klasifikasiSama->kd_urusan . "." . $klasifikasiSama->kd_bidang  . "." . $klasifikasiSama->kd_prog  . "." . $klasifikasiSama->kd_keg . " " . $klasifikasiSama->ket_kegiatan;
+            }
             return '';
         }
     ],

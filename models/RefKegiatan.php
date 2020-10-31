@@ -18,6 +18,8 @@ use Yii;
  */
 class RefKegiatan extends \yii\db\ActiveRecord
 {
+    public $kd_ujung;
+
     /**
      * {@inheritdoc}
      */
@@ -34,7 +36,7 @@ class RefKegiatan extends \yii\db\ActiveRecord
         return [
             [['kd_urusan', 'kd_bidang', 'kd_prog', 'kd_keg'], 'required'],
             [['kd_urusan', 'kd_bidang', 'kd_prog', 'kd_keg', 'kd_ubah', 'id_lama'], 'integer'],
-            [['ket_kegiatan'], 'string'],
+            [['ket_kegiatan', 'kd_ujung'], 'string'],
         ];
     }
 
@@ -48,6 +50,13 @@ class RefKegiatan extends \yii\db\ActiveRecord
         if ($this->kd_ubah == JenisUbah::KD_UBAH_NAMA) {
             $refKegiatanLama = RefKegiatanLama::findOne(['kd_urusan' => $this->kd_urusan, 'kd_bidang' => $this->kd_bidang, 'kd_prog' => $this->kd_prog, 'kd_keg' => $this->kd_keg]);
             if ($refKegiatanLama) $this->id_lama = $refKegiatanLama->id;
+        }
+        if($this->kd_ubah == JenisUbah::KD_UBAH_KODE && $this->kd_ujung){
+            if(strlen($this->kd_ujung) > 0){
+                list($kdProgram, $kdKegiatan) = explode('.', $this->kd_ujung);
+                $refKegiatanLama = RefKegiatanLama::findOne(['kd_urusan' => $this->kd_urusan, 'kd_bidang' => $this->kd_bidang, 'kd_prog' => $kdProgram, 'kd_keg' => $kdKegiatan]);
+                if ($refKegiatanLama) $this->id_lama = $refKegiatanLama->id;
+            }
         }
         return true;
     }
@@ -66,6 +75,7 @@ class RefKegiatan extends \yii\db\ActiveRecord
             'ket_kegiatan' => 'Ket Kegiatan',
             'kd_ubah' => 'Kd Ubah',
             'id_lama' => 'Id Lama',
+            'kd_ujung' => 'Kode 2 Digit Terakhir'
         ];
     }
 

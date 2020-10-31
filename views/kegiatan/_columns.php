@@ -38,7 +38,7 @@ return [
     [
         'label' => 'Perkiraan Klasifikasi Lama',
         'value' => function($model){
-            $klasifikasiLama = RefKegiatanLama::find()->where("ket_kegiatan LIKE '%{$model->ket_kegiatan}%'")->one();
+            $klasifikasiLama = RefKegiatanLama::find()->where(['like', 'ket_kegiatan', $model->ket_kegiatan])->one();
             if($klasifikasiLama) return $klasifikasiLama->kd_urusan . "." . $klasifikasiLama->kd_bidang  . "." . $klasifikasiLama->kd_prog  . "." . $klasifikasiLama->kd_keg . " " . $klasifikasiLama->ket_kegiatan;
             return '';
         }

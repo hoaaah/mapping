@@ -72,7 +72,7 @@ CrudAsset::register($this);
                         ],
                         'pjaxContainerId' => 'crud-datatable-pjax',
                     ])->label(false) .
-                    '</div><div class="col-md-6">' .
+                    '</div><div class="col-md-4">' .
                     $form->field($searchModel, 'id_lama')->widget(Select2::classname(), [
                         'data' => ArrayHelper::map(RefProgramLama::find()->select(['id', "CONCAT(kd_urusan, '.', kd_bidang, '.', kd_prog, ' ', ket_program) AS ket_program"])->all(), 'id', 'ket_program'),
                         'options' => ['placeholder' => 'Pilih Program Lama ...'],
@@ -82,6 +82,8 @@ CrudAsset::register($this);
                         'pjaxContainerId' => 'crud-datatable-pjax',
                     ])->label(false) .
                     '</div><div class="col-md-3">' .
+                    $form->field($searchModel, 'id_lama')->textInput(['placeholder' => 'Digit Terakhir'])->label(false) .
+                    '</div><div class="col-md-2">' .
                     Html::submitButton('<i class="glyphicon glyphicon-arrow-right"></i> Submit Perubahan', ['id' => 'batch-submit', 'class' => 'btn btn-warning', 'data-confirm' => "Akan menyimpan data dana transfer pada belanja tersebut, pastikan data sudah benar.",]) .
                     '</div></div>',
             ]

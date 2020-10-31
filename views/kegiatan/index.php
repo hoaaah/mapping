@@ -12,6 +12,7 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
+use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RefKegiatanSearch */
@@ -75,7 +76,7 @@ CrudAsset::register($this);
                         ],
                         'pjaxContainerId' => 'crud-datatable-pjax',
                     ])->label(false) .
-                    '</div><div class="col-md-6">' .
+                    '</div><div class="col-md-4">' .
                     $form->field($searchModel, 'id_lama')->widget(Select2::classname(), [
                         // 'data' => ArrayHelper::map(RefKegiatanLama::find()->select(['id', "CONCAT(kd_urusan, '.', kd_bidang, '.', kd_prog, '.', kd_keg, ' ', ket_kegiatan) AS ket_kegiatan"])->all(), 'id', 'ket_kegiatan'),
                         'options' => ['placeholder' => 'Pilih Kegiatan Lama ...'],
@@ -100,6 +101,11 @@ CrudAsset::register($this);
                         'pjaxContainerId' => 'crud-datatable-pjax',
                     ])->label(false) .
                     '</div><div class="col-md-3">' .
+                    $form->field($searchModel, 'kd_ujung')->widget(MaskedInput::class, [
+                        'options' => ['placeholder' => '2 Digit Terakhir'],
+                        'mask' => '9[9].9[9]'
+                    ])->label(false) .
+                    '</div><div class="col-md-2">' .
                     Html::submitButton('<i class="glyphicon glyphicon-arrow-right"></i> Submit Perubahan', ['id' => 'batch-submit', 'class' => 'btn btn-warning', 'data-confirm' => "Akan menyimpan data dana transfer pada belanja tersebut, pastikan data sudah benar.",]) .
                     '</div></div>',
             ]

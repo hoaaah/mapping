@@ -70,11 +70,13 @@ class KegiatanController extends Controller
             $post = Yii::$app->request->post();
             (array) $selections = $post['selection'];
             (int) $kdUbah = $post[$searchModel->formName()]['kd_ubah'];
+            $kdUjung = $post[$searchModel->formName()]['kd_ujung'];
             $id_lama = $post[$searchModel->formName()]['id_lama'];
             foreach ($selections as $key => $value) {
                 $model = $this->findModel($value);
                 $model->kd_ubah = $kdUbah;
                 if ($id_lama) $model->id_lama = $id_lama;
+                $model->kd_ujung = $kdUjung;
                 $model->save();
             }
         }

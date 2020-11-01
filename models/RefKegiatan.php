@@ -54,8 +54,13 @@ class RefKegiatan extends \yii\db\ActiveRecord
         if($this->kd_ubah == JenisUbah::KD_UBAH_KODE && $this->kd_ujung){
             if(strlen($this->kd_ujung) > 0){
                 list($kdProgram, $kdKegiatan) = explode('.', $this->kd_ujung);
-                $refKegiatanLama = RefKegiatanLama::findOne(['kd_urusan' => $this->kd_urusan, 'kd_bidang' => $this->kd_bidang, 'kd_prog' => $kdProgram, 'kd_keg' => $kdKegiatan]);
-                if ($refKegiatanLama) $this->id_lama = $refKegiatanLama->id;
+                if(strlen($kdProgram) > 0 && strlen($kdKegiatan) > 0 && $kdKegiatan != '_'){
+                    $refKegiatanLama = RefKegiatanLama::findOne(['kd_urusan' => $this->kd_urusan, 'kd_bidang' => $this->kd_bidang, 'kd_prog' => $kdProgram, 'kd_keg' => $kdKegiatan]);
+                    if ($refKegiatanLama) $this->id_lama = $refKegiatanLama->id;
+                }else{
+                    $refKegiatanLama = RefKegiatanLama::findOne(['kd_urusan' => $this->kd_urusan, 'kd_bidang' => $this->kd_bidang, 'kd_prog' => $kdProgram, 'kd_keg' => $this->kd_keg]);
+                    if ($refKegiatanLama) $this->id_lama = $refKegiatanLama->id;
+                }
             }
         }
         return true;

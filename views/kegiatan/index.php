@@ -42,7 +42,7 @@ CrudAsset::register($this);
             'pjax' => true,
             'columns' => require(__DIR__ . '/_columns.php'),
             'rowOptions' => function ($model, $key, $index, $grid) {
-                $klasifikasiLama = RefKegiatanLama::find()->where(['like', 'ket_kegiatan', $model->ket_kegiatan])->one();
+                $klasifikasiLama = RefKegiatanLama::find()->where(['like', 'ket_kegiatan', $model->ket_kegiatan])->andWhere(['kd_urusan' => $model->kd_urusan, 'kd_bidang' => $model->kd_bidang])->one();
                 if ($klasifikasiLama) {
                     if ($klasifikasiLama->kd_urusan == $model->kd_urusan && $klasifikasiLama->kd_bidang == $model->kd_bidang && $klasifikasiLama->kd_prog == $model->kd_prog && $klasifikasiLama->kd_keg == $model->kd_keg) return ['class' => GridView::TYPE_DEFAULT];
                 }

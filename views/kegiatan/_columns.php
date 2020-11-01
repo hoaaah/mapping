@@ -24,7 +24,7 @@ return [
         'label'=>'Program Lama',
         'value'=> function($model){
             if($model->program->programLama) return $model->program->programLama->kd_urusan . "." . $model->program->programLama->kd_bidang  . "." . $model->program->programLama->kd_prog . " " . $model->program->programLama->ket_program;
-            return '';
+            return '-';
         },
         'group' => true,
     ],

@@ -55,6 +55,7 @@ class ProgramController extends Controller
                 $model->kd_ujung = $kdUjung;
                 $model->save();
             }
+            return $this->redirect(Yii::$app->request->referrer);
         }
 
         return $this->render('index', [

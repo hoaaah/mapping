@@ -82,7 +82,7 @@ CrudAsset::register($this);
                         'pjaxContainerId' => 'crud-datatable-pjax',
                     ])->label(false) .
                     '</div><div class="col-md-3">' .
-                    $form->field($searchModel, 'id_lama')->textInput(['placeholder' => 'Digit Terakhir'])->label(false) .
+                    $form->field($searchModel, 'kd_ujung')->textInput(['placeholder' => 'Digit Terakhir'])->label(false) .
                     '</div><div class="col-md-2">' .
                     Html::submitButton('<i class="glyphicon glyphicon-arrow-right"></i> Submit Perubahan', ['id' => 'batch-submit', 'class' => 'btn btn-warning', 'data-confirm' => "Akan menyimpan data dana transfer pada belanja tersebut, pastikan data sudah benar.",]) .
                     '</div></div>',

@@ -80,7 +80,7 @@ class RefRek4 extends \yii\db\ActiveRecord
                     $refRek4Lama = RefRek4Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $kdRek3, 'kd_rek_4' => $kdRek4]);
                     if ($refRek4Lama) $this->id_lama = $refRek4Lama->id;
                 } else {
-                    $refRek4Lama = RefRek4Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $kdRek3, 'kd_rek_4' => $this->kdRek4]);
+                    $refRek4Lama = RefRek4Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $kdRek3, 'kd_rek_4' => $this->kd_rek_4]);
                     if ($refRek4Lama) $this->id_lama = $refRek4Lama->id;
                 }
             }

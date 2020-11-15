@@ -44,7 +44,7 @@ class Rek4Controller extends Controller
                 (
                     SELECT
                     id, CONCAT(kd_rek_1, '.', kd_rek_2, '.', kd_rek_3, '.', kd_rek_4, ' ', nm_rek_4) AS text
-                    FROM ref_rek_4
+                    FROM ref_rek_4_lama
                 ) a 
                 WHERE text LIKE :q
             ", [':q' => "%{$q}%"]);
@@ -70,11 +70,13 @@ class Rek4Controller extends Controller
             $post = Yii::$app->request->post();
             (array) $selections = $post['selection'];
             (int) $kdUbah = $post[$searchModel->formName()]['kd_ubah'];
+            $kdUjung = $post[$searchModel->formName()]['kd_ujung'];
             $id_lama = $post[$searchModel->formName()]['id_lama'];
             foreach ($selections as $key => $value) {
                 $model = $this->findModel($value);
                 $model->kd_ubah = $kdUbah;
                 if ($id_lama) $model->id_lama = $id_lama;
+                $model->kd_ujung = $kdUjung;
                 $model->save();
             }
         }

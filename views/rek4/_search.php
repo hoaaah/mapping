@@ -21,11 +21,19 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'kd_rek_1')->textInput() ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
+        <?= $form->field($model, 'kd_rek_2')->textInput() ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'kd_rek_3')->textInput() ?>
+    </div>
+
+    <div class="col-md-3">
         <?= $form->field($model, 'nm_rek_4')->textInput() ?>
     </div>
 

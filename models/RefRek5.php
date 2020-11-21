@@ -22,7 +22,9 @@ use Yii;
  */
 class RefRek5 extends \yii\db\ActiveRecord
 {
-    public $kd_ujung;
+
+    public $kd_ujung, $tambah_sisip;
+
     /**
      * {@inheritdoc}
      */
@@ -38,7 +40,7 @@ class RefRek5 extends \yii\db\ActiveRecord
     {
         return [
             [['kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4', 'kd_rek_5'], 'required'],
-            [['kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4', 'kd_rek_5', 'kd_ubah', 'id_lama'], 'integer'],
+            [['kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4', 'kd_rek_5', 'kd_ubah', 'id_lama', 'tambah_sisip'], 'integer'],
             [['nm_rek_5', 'kd_ujung'], 'string', 'max' => 255],
             [['peraturan'], 'string', 'max' => 50],
             [['kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4', 'kd_rek_5'], 'unique', 'targetAttribute' => ['kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4', 'kd_rek_5']],
@@ -62,7 +64,8 @@ class RefRek5 extends \yii\db\ActiveRecord
             'peraturan' => 'Peraturan',
             'kd_ubah' => 'Kd Ubah',
             'id_lama' => 'Id Lama',
-            'kd_ujung' => 'Kode 3 Digit Terakhir'
+            'kd_ujung' => 'Kode 3 Digit Terakhir',
+            'tambah_sisip' => 'Tambah Sisip'
         ];
     }
 
@@ -77,14 +80,20 @@ class RefRek5 extends \yii\db\ActiveRecord
             $refRek5Lama = RefRek5Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $this->kd_rek_3, 'kd_rek_4' => $this->kd_rek_4, 'kd_rek_5' => $this->kd_rek_5]);
             if ($refRek5Lama) $this->id_lama = $refRek5Lama->id;
         }
+        if ($this->kd_ubah == JenisUbah::KD_UBAH_KODE && $this->tambah_sisip) {
+            if(strlen($this->tambah_sisip) > 0){
+                $refRek5Lama = RefRek5Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $this->kd_rek_3, 'kd_rek_4' => $this->kd_rek_4, 'kd_rek_5' => ($this->kd_rek_5 + (int) $this->tambah_sisip)]);
+                if ($refRek5Lama) $this->id_lama = $refRek5Lama->id;
+            }
+        }
         if ($this->kd_ubah == JenisUbah::KD_UBAH_KODE && $this->kd_ujung) {
             if (strlen($this->kd_ujung) > 0) {
                 list($kdRek3, $kdRek4, $kdRek5) = explode('.', $this->kd_ujung);
                 if (strlen($kdRek3) > 0  && strlen($kdRek4) > 0 && $kdRek4 != '_' && strlen($kdRek5) > 0 && $kdRek5 != '_') {
-                    $refRek5Lama = RefRek5Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $kdRek3, 'kd_rek_4' => $kdRek4, 'kd_rek_5' => $kdRek5]);
+                    $refRek5Lama = RefRek5Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $kdRek3, 'kd_rek_4' => $kdRek4, 'kd_rek_5' => ($kdRek5 + (int) $this->tambah_sisip)]);
                     if ($refRek5Lama) $this->id_lama = $refRek5Lama->id;
                 } else {
-                    $refRek5Lama = RefRek5Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $kdRek3, 'kd_rek_4' => $kdRek4, 'kd_rek_5' => $this->kd_rek_5]);
+                    $refRek5Lama = RefRek5Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $kdRek3, 'kd_rek_4' => $kdRek4, 'kd_rek_5' => ($this->kd_rek_5 + (int) $this->tambah_sisip)]);
                     if ($refRek5Lama) $this->id_lama = $refRek5Lama->id;
                 }
             }

@@ -116,6 +116,6 @@ class RefRek4 extends \yii\db\ActiveRecord
 
     public function getRefRek4Lama()
     {
-        return $this->hasOne(RefRek4::class, ['id' => 'id_lama']);
+        return $this->hasOne(RefRek4Lama::class, ['id' => 'id_lama']);
     }
 }

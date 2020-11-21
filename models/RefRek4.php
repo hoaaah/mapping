@@ -21,7 +21,7 @@ use Yii;
  */
 class RefRek4 extends \yii\db\ActiveRecord
 {
-    public $kd_ujung;
+    public $kd_ujung, $tambah_sisip;
     /**
      * {@inheritdoc}
      */
@@ -73,14 +73,20 @@ class RefRek4 extends \yii\db\ActiveRecord
             $refRek4Lama = RefRek4Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $this->kd_rek_3, 'kd_rek_4' => $this->kd_rek_4]);
             if ($refRek4Lama) $this->id_lama = $refRek4Lama->id;
         }
+        if ($this->kd_ubah == JenisUbah::KD_UBAH_KODE && $this->tambah_sisip) {
+            if(strlen($this->tambah_sisip) > 0){
+                $refRek4Lama = RefRek4Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $this->kd_rek_3, 'kd_rek_4' => ($this->kd_rek_4 + (int) $this->tambah_sisip)]);
+                if ($refRek4Lama) $this->id_lama = $refRek4Lama->id;
+            }
+        }
         if ($this->kd_ubah == JenisUbah::KD_UBAH_KODE && $this->kd_ujung) {
             if (strlen($this->kd_ujung) > 0) {
                 list($kdRek3, $kdRek4) = explode('.', $this->kd_ujung);
                 if (strlen($kdRek3) > 0  && strlen($kdRek4) > 0 && $kdRek4 != '_') {
-                    $refRek4Lama = RefRek4Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $kdRek3, 'kd_rek_4' => $kdRek4]);
+                    $refRek4Lama = RefRek4Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $kdRek3, 'kd_rek_4' => ($kdRek4 + (int) $this->tambah_sisip)]);
                     if ($refRek4Lama) $this->id_lama = $refRek4Lama->id;
                 } else {
-                    $refRek4Lama = RefRek4Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $kdRek3, 'kd_rek_4' => $this->kd_rek_4]);
+                    $refRek4Lama = RefRek4Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $kdRek3, 'kd_rek_4' => ($this->kd_rek_4 + (int) $this->tambah_sisip)]);
                     if ($refRek4Lama) $this->id_lama = $refRek4Lama->id;
                 }
             }

@@ -62,7 +62,7 @@ CrudAsset::register($this);
                 'heading' => '<i class="glyphicon glyphicon-list"></i> Ref Rek4s listing',
                 'before' => '<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after' =>
-                '<div class="row"><div class="col-md-3">' .
+                '<div class="row"><div class="col-md-2">' .
                     $form->field($searchModel, 'kd_ubah')->widget(Select2::classname(), [
                         'data' => ArrayHelper::map(JenisUbah::find()->all(), 'id', 'jenis'),
                         'options' => ['placeholder' => 'Pilih Jenis Ubah ...'],
@@ -95,11 +95,13 @@ CrudAsset::register($this);
                         ],
                         'pjaxContainerId' => 'crud-datatable-pjax',
                     ])->label(false) .
-                    '</div><div class="col-md-3">' .
+                    '</div><div class="col-md-2">' .
                     $form->field($searchModel, 'kd_ujung')->widget(MaskedInput::class, [
                         'options' => ['placeholder' => '2 Digit Terakhir'],
                         'mask' => '9[9].9[9]'
                     ])->label(false) .
+                    '</div><div class="col-md-2">' .
+                    $form->field($searchModel, 'tambah_sisip')->textInput(['placeholder' => $searchModel->getAttributeLabel('tambah_sisip')])->label(false) .
                     '</div><div class="col-md-2">' .
                     Html::submitButton('<i class="glyphicon glyphicon-arrow-right"></i> Submit Perubahan', ['id' => 'batch-submit', 'class' => 'btn btn-warning', 'data-confirm' => "Akan menyimpan data dana transfer pada belanja tersebut, pastikan data sudah benar.",]) .
                     '</div></div>',

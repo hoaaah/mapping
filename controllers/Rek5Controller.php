@@ -81,6 +81,7 @@ class Rek5Controller extends Controller
                 $model->tambah_sisip = $tambahSisip;
                 $model->save();
             }
+            return $this->redirect(Yii::$app->request->referrer);
         }
 
         return $this->render('index', [

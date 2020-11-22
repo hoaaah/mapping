@@ -18,7 +18,8 @@ return [
         'attribute' => 'nm_rek_4',
         'value' => function ($model) {
             return $model->kd_rek_1 . "." . $model->kd_rek_2  . "." . $model->kd_rek_3  . "." . $model->kd_rek_4  . " " . $model->refRek4->nm_rek_4;
-        }
+        },
+        'group' => true,
     ],
     [
         'label' => 'Rek 4 Lama',

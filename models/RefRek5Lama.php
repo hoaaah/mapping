@@ -41,6 +41,13 @@ class RefRek5Lama extends \yii\db\ActiveRecord
         ];
     }
 
+    public function delete()
+    {
+        $this->hapus = 1;
+        $this->save();
+    }
+
+
     /**
      * {@inheritdoc}
      */

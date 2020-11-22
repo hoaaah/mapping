@@ -52,6 +52,7 @@ AppAsset::register($this);
                     ['label' => 'Bidang', 'url' => ['/bidang-hapus']],
                     ['label' => 'Program', 'url' => ['/program-hapus']],
                     ['label' => 'Kegiatan', 'url' => ['/kegiatan-hapus']],
+                    ['label' => 'Rekening 5', 'url' => ['/rek5-hapus']],
                 ]],
                 ['label' => 'About', 'url' => ['/rekap']],
                 ['label' => 'About', 'url' => ['/site/about']],

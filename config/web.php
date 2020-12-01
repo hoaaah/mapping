@@ -61,7 +61,7 @@ $config = [
         'rules' => [
             [
                 'allow' => true,
-                'actions' => ['login', 'qr', 'signup'],
+                'actions' => ['login', 'qr', 'signup', 'cek-kegiatan', 'cek-rekening'],
             ],
             [
                 'allow' => true,

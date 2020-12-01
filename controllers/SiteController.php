@@ -10,8 +10,10 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\RefBidang;
+use app\models\RefKegiatanLama;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use yii\web\NotFoundHttpException;
 
 class SiteController extends Controller
 {
@@ -65,6 +67,20 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionCekKegiatan($kd_urusan = null, $kd_bidang = null, $kd_prog = null, $kd_keg = null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $kegiatan = RefKegiatanLama::find()->where("kd_urusan LIKE :kd_urusan AND kd_bidang LIKE :kd_bidang AND kd_prog LIKE :kd_prog AND kd_keg LIKE :kd_keg", [
+            ':kd_urusan' => $kd_urusan ?? '%',
+            ':kd_bidang' => $kd_bidang ?? '%',
+            ':kd_prog' => $kd_prog ?? '%',
+            ':kd_keg' => $kd_keg ?? '%',
+        ])->all();
+        if (!$kegiatan) throw new NotFoundHttpException();
+
+        return $kegiatan;
     }
 
     public function actionBidang()

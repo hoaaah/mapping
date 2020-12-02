@@ -1,7 +1,12 @@
 {
     "name": "yiisoft/yii2-app-basic",
     "description": "Yii 2 Basic Project Template",
-    "keywords": ["yii2", "framework", "basic", "project template"],
+    "keywords": [
+        "yii2",
+        "framework",
+        "basic",
+        "project template"
+    ],
     "homepage": "http://www.yiiframework.com/",
     "type": "project",
     "license": "BSD-3-Clause",
@@ -29,7 +34,10 @@
         "yiisoft/yii2-httpclient": "*",
         "kidzen/yii2-dynamicform": "*",
         "setasign/fpdf": "1.8",
-        "johnitvn/yii2-ajaxcrud": "*"
+        "johnitvn/yii2-ajaxcrud": "*",
+        "creocoder/yii2-flysystem": "^0.9.4",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "vlucas/phpdotenv": "^5.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

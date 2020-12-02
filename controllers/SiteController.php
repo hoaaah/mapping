@@ -11,6 +11,8 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\RefBidang;
 use app\models\RefKegiatanLama;
+use app\models\RefRek5;
+use app\models\RefRek5Lama;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
@@ -81,6 +83,21 @@ class SiteController extends Controller
         if (!$kegiatan) throw new NotFoundHttpException();
 
         return $kegiatan;
+    }
+
+    public function actionCekRekening($kd_rek_1 = null, $kd_rek_2 = null, $kd_rek_3 = null, $kd_rek_4 = null, $kd_rek_5 = null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $rekening = RefRek5Lama::find()->where("kd_rek_1 LIKE :kd_rek_1 AND kd_rek_2 LIKE :kd_rek_2 AND kd_rek_3 LIKE :kd_rek_3 AND kd_rek_4 LIKE :kd_rek_4 AND kd_rek_5 LIKE :kd_rek_5", [
+            ':kd_rek_1' => $kd_rek_1 ?? '%',
+            ':kd_rek_2' => $kd_rek_2 ?? '%',
+            ':kd_rek_3' => $kd_rek_3 ?? '%',
+            ':kd_rek_4' => $kd_rek_4 ?? '%',
+            ':kd_rek_5' => $kd_rek_5 ?? '%',
+        ])->all();
+        if (!$rekening) throw new NotFoundHttpException();
+
+        return $rekening;
     }
 
     public function actionBidang()

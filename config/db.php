@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=host.docker.internal;dbname=mapping',
-    'username' => 'root',
-    'password' => '',
+    'dsn' => env("DB_DSN"),
+    'username' => env("DB_USERNAME"),
+    'password' => env("DB_PASSWORD"),
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)

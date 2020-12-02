@@ -53,6 +53,18 @@ $config = [
             'showScriptName' => false,
             'rules' => [],
         ],
+        'awss3Fs' => [
+            'class' => 'creocoder\flysystem\AwsS3Filesystem',
+            'key' => env('S3_KEY'),
+            'secret' => env('SECRET_KEY'),
+            'bucket' => env('S3_BUCKET'),
+            'region' => env('S3_REGION'),
+            // 'version' => 'latest',
+            // 'baseUrl' => 'your-base-url',
+            // 'prefix' => 'your-prefix',
+            // 'options' => [],
+            // 'endpoint' => 'http://my-custom-url'
+        ]
     ],
     // this class use for force login to all controller. Usefull quiet enough
     // this function work only in login placed in site controller. FOr other login controller/action, change denyCallback access

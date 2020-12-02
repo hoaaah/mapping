@@ -37,7 +37,7 @@
         "johnitvn/yii2-ajaxcrud": "*",
         "creocoder/yii2-flysystem": "^0.9.4",
         "league/flysystem-aws-s3-v3": "^1.0",
-        "vlucas/phpdotenv": "^5.2"
+        "yiithings/yii2-dotenv": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

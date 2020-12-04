@@ -100,6 +100,12 @@ class SiteController extends Controller
         return $rekening;
     }
 
+    public function actionUnggahKegiatan()
+    {
+
+        return $this->render("kegiatan");
+    }
+
     public function actionBidang()
     {
         $out = [];

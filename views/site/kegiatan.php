@@ -39,7 +39,7 @@ $this->title = 'Cek Kegiatan';
     ]) ?>
 
     <div class="form-group">
-        <p class="text-info small">Silakan drag & drop file csv dari ref_kegiatan dengan format yang telah diberikan kemudian tekan unggah. Tunggu hingga proses selesai dan muncul popup berisi tabel tambahan kegiatan di database. Proses memunculkan data pada popup mungkin memakan waktu.
+        <p class="text-info small">Silakan drag & drop file csv dari ref_kegiatan/ref_rekening dengan format yang telah diberikan kemudian tekan unggah. Tunggu hingga proses selesai dan muncul popup berisi tabel tambahan kegiatan di database. Proses memunculkan data pada popup mungkin memakan waktu.
         </p>
         <div class="form-group">
             <?= Html::a('<i class="fa fa-upload"></i> Process', false, ['class' => 'btn btn-success', 'id' => 'submitButton'] ) ?>

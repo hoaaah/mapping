@@ -207,6 +207,110 @@ class SiteController extends Controller
 
     }
 
+    public function actionUnggahRekening()
+    {
+        $model = new KegiatanForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            // process uploaded image file instance
+            $image = $model->uploadImage();
+            // return var_dump($image);
+
+            if ($image !== false) {
+                Yii::$app->awss3Fs->put($model->pathToFile.$model->file, fopen($image->tempName,'r+'), [
+                    'visibility' => AdapterInterface::VISIBILITY_PUBLIC,
+                ]);
+            }
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return [
+                'status' => 1,
+                'message' => 'Upload Success, please wait for a moment.',
+                'redirect' => 1,
+                'method' => 'POST',
+                'redirect' => Url::to(['result-rekening', 'id' => $model->file], true)
+            ];
+            // return $this->redirect(['view', 'id'=>$model->id]);
+        }
+
+        return $this->render("kegiatan", ['model' => $model]);
+    }
+
+    public function actionResultRekening($id){
+        
+        $model = new KegiatanForm(); 
+        $model->find($id);
+
+        $fileNameArray = explode('.', $id);
+        $fileExtension = end($fileNameArray);
+        $tmpfname = tempnam(sys_get_temp_dir(),  'data');
+        $handle = fopen($tmpfname, 'w');
+        fwrite($handle, @file_get_contents($model->getImageUrl()));
+        fclose($handle);
+        $inputFileName = $tmpfname;
+        $inputFileType = ucwords($fileExtension);
+
+        /**  Create a new Reader of the type that has been identified  **/
+        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+        /**  Load $inputFileName to a Spreadsheet Object  **/
+        $spreadsheet = $reader->load($inputFileName);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+        $headings = array_shift($sheetData);
+        
+        array_walk(
+            $sheetData,
+            function(&$row) use($headings) {
+              $row = array_combine($headings, $row);
+            }
+        );
+
+        $i = 0;
+        /**
+         * format array
+         * ['kd_urusan' => 1, 'kd_bidang' => 1, 'kd_prog' => 1, 'kd_keg' => 1, 'ket_kegiatan' => 'Keterangan', 'ket' => 'diubah/tambahan']
+         */
+        $duplicateData = 0;
+        $imported = 0;
+        $saldoAkhir = 0;
+        $dataArray = [];
+        foreach($sheetData as $data){
+            foreach ($data as $key => $value) {
+                // str_replace(' ', '', strtolower($key))
+                if(str_replace(' ', '', strtolower($key)) == 'kd_rek_1') $kd_rek_1 = $value;
+                if(str_replace(' ', '', strtolower($key)) == 'kd_rek_2') $kd_rek_2 = $value;
+                if(str_replace(' ', '', strtolower($key)) == 'kd_rek_3') $kd_rek_3 = $value;
+                if(str_replace(' ', '', strtolower($key)) == 'kd_rek_4') $kd_rek_4 = $value;
+                if(str_replace(' ', '', strtolower($key)) == 'kd_rek_5') $kd_rek_5 = $value;
+                if(str_replace(' ', '', strtolower($key)) == 'nm_rek_5') $nm_rek_5 = $value;
+            }
+            // find duplicate first
+            $rekeningLamaExist = RefRek5Lama::findOne(['kd_rek_1' => $kd_rek_1, 'kd_rek_2' => $kd_rek_2, 'kd_rek_3' => $kd_rek_3, 'kd_rek_4' => $kd_rek_4, 'kd_rek_5' => $kd_rek_5]);
+            if($rekeningLamaExist){
+                if($rekeningLamaExist->nm_rek_5 !== $nm_rek_5) $dataArray[] = ['kd_rek_1' => $kd_rek_1, 'kd_rek_2' => $kd_rek_2, 'kd_rek_3' => $kd_rek_3, 'kd_rek_4' => $kd_rek_4, 'kd_rek_5' => $kd_rek_5, 'nm_rek_5' => $nm_rek_5, 'ket' => 'diubah dari keterangan lama "' . $rekeningLamaExist->nm_rek_5 .'"'];
+            }
+            if(!$rekeningLamaExist){
+                $dataArray[] = ['kd_rek_1' => $kd_rek_1, 'kd_rek_2' => $kd_rek_2, 'kd_rek_3' => $kd_rek_3, 'kd_rek_4' => $kd_rek_4, 'kd_rek_5' => $kd_rek_5, 'nm_rek_5' => $nm_rek_5, 'ket' => 'Tambahan'];
+            }
+            $i++;
+        }
+
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $dataArray,
+            'pagination' => [
+                'pageSize' => 0,
+            ],
+            'sort' => [
+                'attributes' => ['kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4', 'kd_rek_5', 'nm_rek_5', 'ket'],
+            ],
+        ]);
+
+        // return var_dump($dataArray);
+
+        return $this->renderAjax("result-rekening", ['dataProvider' => $dataProvider]);
+
+        if(Yii::$app->params['useS3FileSystem'] == 'enable') unlink($tmpfname);
+
+    }
+
     public function actionBidang()
     {
         $out = [];

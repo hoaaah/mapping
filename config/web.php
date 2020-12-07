@@ -78,6 +78,12 @@ $config = [
             ],
             [
                 'allow' => true,
+                'controllers' => [
+                    'gridview/export'
+                ],
+            ],
+            [
+                'allow' => true,
                 'roles' => ['@'],
             ],
         ],

@@ -39,7 +39,8 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "yiithings/yii2-dotenv": "*",
         "phpoffice/phpspreadsheet": "^1.8",
-        "yidas/yii2-fontawesome": "^5.0"
+        "yidas/yii2-fontawesome": "^5.0",
+        "kartik-v/yii2-tabs-x": "^1.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

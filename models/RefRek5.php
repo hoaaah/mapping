@@ -81,7 +81,7 @@ class RefRek5 extends \yii\db\ActiveRecord
             if ($refRek5Lama) $this->id_lama = $refRek5Lama->id;
         }
         if ($this->kd_ubah == JenisUbah::KD_UBAH_KODE && $this->tambah_sisip) {
-            if(strlen($this->tambah_sisip) > 0){
+            if (strlen($this->tambah_sisip) > 0) {
                 $refRek5Lama = RefRek5Lama::findOne(['kd_rek_1' => $this->kd_rek_1, 'kd_rek_2' => $this->kd_rek_2, 'kd_rek_3' => $this->kd_rek_3, 'kd_rek_4' => $this->kd_rek_4, 'kd_rek_5' => ($this->kd_rek_5 + (int) $this->tambah_sisip)]);
                 if ($refRek5Lama) $this->id_lama = $refRek5Lama->id;
             }
@@ -109,5 +109,25 @@ class RefRek5 extends \yii\db\ActiveRecord
     public function getRefRek4()
     {
         return $this->hasOne(RefRek4::className(), ['kd_rek_1' => 'kd_rek_1', 'kd_rek_2' => 'kd_rek_2', 'kd_rek_3' => 'kd_rek_3', 'kd_rek_4' => 'kd_rek_4']);
+    }
+
+    public function getRek5TextWithCode()
+    {
+        return $this->kd_rek_1 . '.' . $this->kd_rek_2 . '.' . substr("00" . $this->kd_rek_3, -2) . '.' . substr("00" . $this->kd_rek_4, -2) . '.' . substr("000" . $this->kd_rek_5, -3) . ' ' . $this->nm_rek_5;
+    }
+
+    public function getRefRek3()
+    {
+        return $this->hasOne(RefRek3::class, ['kd_rek_1' => 'kd_rek_1', 'kd_rek_2' => 'kd_rek_2', 'kd_rek_3' => 'kd_rek_3']);
+    }
+
+    public function getRefRek2()
+    {
+        return $this->hasOne(RefRek2::class, ['kd_rek_1' => 'kd_rek_1', 'kd_rek_2' => 'kd_rek_2']);
+    }
+
+    public function getRefAkrualRek()
+    {
+        return $this->hasOne(RefAkrualRek::class, ['kd_rek_1' => 'kd_rek_1', 'kd_rek_2' => 'kd_rek_2', 'kd_rek_3' => 'kd_rek_3', 'kd_rek_4' => 'kd_rek_4', 'kd_rek_5' => 'kd_rek_5']);
     }
 }

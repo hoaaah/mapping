@@ -38,7 +38,7 @@ AppAsset::register($this);
                 'class' => 'navbar-inverse navbar-fixed-top',
             ],
         ]);
-        if(Yii::$app->user->isGuest){
+        if (Yii::$app->user->isGuest) {
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
@@ -49,8 +49,7 @@ AppAsset::register($this);
                     ]],
                     ['label' => 'About', 'url' => ['/site/about']],
                     ['label' => 'Contact', 'url' => ['/site/contact']],
-                    Yii::$app->user->isGuest ? (['label' => 'Login', 'url' => ['/site/login']]) : (
-                        '<li>'
+                    Yii::$app->user->isGuest ? (['label' => 'Login', 'url' => ['/site/login']]) : ('<li>'
                         . Html::beginForm(['/site/logout'], 'post')
                         . Html::submitButton(
                             'Logout (' . Yii::$app->user->identity->username . ')',
@@ -60,7 +59,7 @@ AppAsset::register($this);
                         . '</li>')
                 ],
             ]);
-        }else{
+        } else {
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
@@ -71,6 +70,7 @@ AppAsset::register($this);
                         ['label' => 'Kegiatan', 'url' => ['/kegiatan']],
                         ['label' => 'Rekening 4', 'url' => ['/rek4']],
                         ['label' => 'Rekening 5', 'url' => ['/rek5']],
+                        ['label' => 'Rekening Akrual 64', 'url' => ['/mapping-akrual']],
                     ]],
                     ['label' => 'Hapus', 'items' => [
                         ['label' => 'Bidang', 'url' => ['/bidang-hapus']],
@@ -81,8 +81,7 @@ AppAsset::register($this);
                     ['label' => 'About', 'url' => ['/rekap']],
                     ['label' => 'About', 'url' => ['/site/about']],
                     ['label' => 'Contact', 'url' => ['/site/contact']],
-                    Yii::$app->user->isGuest ? (['label' => 'Login', 'url' => ['/site/login']]) : (
-                        '<li>'
+                    Yii::$app->user->isGuest ? (['label' => 'Login', 'url' => ['/site/login']]) : ('<li>'
                         . Html::beginForm(['/site/logout'], 'post')
                         . Html::submitButton(
                             'Logout (' . Yii::$app->user->identity->username . ')',

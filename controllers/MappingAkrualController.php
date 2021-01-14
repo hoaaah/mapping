@@ -40,6 +40,31 @@ class MappingAkrualController extends Controller
         ];
     }
 
+    public function actionRekAkrualList($q = null, $id = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+
+            $query = Yii::$app->db->createCommand("
+                SELECT * FROM
+                (
+                    SELECT
+                    CONCAT(kd_akrual_1, '.', kd_akrual_2, '.', kd_akrual_3, '.', kd_akrual_4, '.', kd_akrual_5) AS id, 
+                    CONCAT(kd_akrual_1, '.', kd_akrual_2, '.', kd_akrual_3, '.', kd_akrual_4, '.', kd_akrual_5, ' ', nm_akrual_5) AS text
+                    FROM ref_akrual_5
+                ) a 
+                WHERE text LIKE :q
+            ", [':q' => "%{$q}%"]);
+            $data = $query->queryAll();
+            $out['results'] = array_values($data);
+        } elseif ($id > 0) {
+            list($kd_akrual_1, $kd_akrual_2, $kd_akrual_3, $kd_akrual_4, $kd_akrual_5) = explode('.', $id);
+            $out['results'] = ['id' => $id, 'text' => RefAkrual5::findOne(['kd_akrual_1' => $kd_akrual_1, 'kd_akrual_2' => $kd_akrual_2, 'kd_akrual_3' => $kd_akrual_3, 'kd_akrual_4' => $kd_akrual_4, 'kd_akrual_5' => $kd_akrual_5])->nm_akrual_5];
+        }
+        return $out;
+    }
+
     /**
      * Lists all RefAkrualRek models.
      * @return mixed
@@ -49,6 +74,42 @@ class MappingAkrualController extends Controller
         $searchModel = new RefRek5Search();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = 50;
+
+        if (Yii::$app->request->post()) {
+            $post = Yii::$app->request->post();
+            // return var_dump($post);
+            (array) $selections = $post['selection'];
+            $kodeAkrual = $post[$searchModel->formName()]['kode_akrual'];
+            list($kd_akrual_1, $kd_akrual_2, $kd_akrual_3, $kd_akrual_4, $kd_akrual_5) = explode('.', $kodeAkrual);
+            // $kdUjung = $post[$searchModel->formName()]['kd_ujung'];
+            // $id_lama = $post[$searchModel->formName()]['id_lama'];
+            foreach ($selections as $key => $value) {
+                $refRek5 = RefRek5::findOne(['id' => $value]);
+                $refAkrualRek = RefAkrualRek::findOne([
+                    'kd_rek_1' => $refRek5->kd_rek_1,
+                    'kd_rek_2' => $refRek5->kd_rek_2,
+                    'kd_rek_3' => $refRek5->kd_rek_3,
+                    'kd_rek_4' => $refRek5->kd_rek_4,
+                    'kd_rek_5' => $refRek5->kd_rek_5
+                ]);
+                if (!$refAkrualRek) $refAkrualRek = new RefAkrualRek([
+                    'kd_rek_1' => $refRek5->kd_rek_1,
+                    'kd_rek_2' => $refRek5->kd_rek_2,
+                    'kd_rek_3' => $refRek5->kd_rek_3,
+                    'kd_rek_4' => $refRek5->kd_rek_4,
+                    'kd_rek_5' => $refRek5->kd_rek_5
+                ]);
+                $refAkrualRek->setAttributes([
+                    'kd_akrual_1' => $kd_akrual_1,
+                    'kd_akrual_2' => $kd_akrual_2,
+                    'kd_akrual_3' => $kd_akrual_3,
+                    'kd_akrual_4' => $kd_akrual_4,
+                    'kd_akrual_5' => $kd_akrual_5
+                ]);
+                $refAkrualRek->save(false);
+            }
+            // return $this->redirect(Yii::$app->request->referrer);
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,

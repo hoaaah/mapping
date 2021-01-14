@@ -23,7 +23,7 @@ use Yii;
 class RefRek5 extends \yii\db\ActiveRecord
 {
 
-    public $kd_ujung, $tambah_sisip;
+    public $kd_ujung, $tambah_sisip, $kode_akrual, $kode_mapping_1, $kode_mapping_2;
 
     /**
      * {@inheritdoc}
@@ -41,7 +41,7 @@ class RefRek5 extends \yii\db\ActiveRecord
         return [
             [['kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4', 'kd_rek_5'], 'required'],
             [['kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4', 'kd_rek_5', 'kd_ubah', 'id_lama', 'tambah_sisip'], 'integer'],
-            [['nm_rek_5', 'kd_ujung'], 'string', 'max' => 255],
+            [['nm_rek_5', 'kd_ujung', 'kode_akrual', 'kode_mapping_1', 'kode_mapping_2'], 'string', 'max' => 255],
             [['peraturan'], 'string', 'max' => 50],
             [['kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4', 'kd_rek_5'], 'unique', 'targetAttribute' => ['kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4', 'kd_rek_5']],
             [['kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4'], 'exist', 'skipOnError' => true, 'targetClass' => RefRek4::className(), 'targetAttribute' => ['kd_rek_1' => 'kd_rek_1', 'kd_rek_2' => 'kd_rek_2', 'kd_rek_3' => 'kd_rek_3', 'kd_rek_4' => 'kd_rek_4']],

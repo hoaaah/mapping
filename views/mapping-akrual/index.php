@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'templateResult' => new JsExpression('function(city) { return city.text; }'),
                         'templateSelection' => new JsExpression('function (city) { return city.text; }'),
                     ],
-                    'pjaxContainerId' => 'crud-datatable-pjax',
+                    'pjaxContainerId' => 'ref-akrual-rek-pjax',
                 ])->label(false) .
                 '</div><div class="col-md-4">' .
                 // $form->field($searchModel, 'id_lama')->widget(Select2::classname(), [

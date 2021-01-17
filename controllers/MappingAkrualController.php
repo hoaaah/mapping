@@ -108,7 +108,7 @@ class MappingAkrualController extends Controller
                 ]);
                 $refAkrualRek->save(false);
             }
-            // return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirect(Yii::$app->request->referrer);
         }
 
         return $this->render('index', [

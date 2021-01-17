@@ -365,22 +365,22 @@ class MappingAkrualController extends Controller
         return $return;
     }
 
-    /**
-     * Deletes an existing RefAkrualRek model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $kd_rek_1
-     * @param integer $kd_rek_2
-     * @param integer $kd_rek_3
-     * @param integer $kd_rek_4
-     * @param integer $kd_rek_5
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+    // /**
+    //  * Deletes an existing RefAkrualRek model.
+    //  * If deletion is successful, the browser will be redirected to the 'index' page.
+    //  * @param integer $kd_rek_1
+    //  * @param integer $kd_rek_2
+    //  * @param integer $kd_rek_3
+    //  * @param integer $kd_rek_4
+    //  * @param integer $kd_rek_5
+    //  * @return mixed
+    //  */
+    // public function actionDelete($id)
+    // {
+    //     $this->findModel($id)->delete();
 
-        return $this->redirect(Yii::$app->request->referrer);
-    }
+    //     return $this->redirect(Yii::$app->request->referrer);
+    // }
 
     /**
      * Finds the RefAkrualRek model based on its primary key value.

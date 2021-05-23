@@ -7,6 +7,7 @@ use app\models\RefAkrual5;
 use Yii;
 use app\models\RefAkrualRek;
 use app\models\RefAkrualRekSearch;
+use app\models\RefMappingSa;
 use app\models\RefRek5;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -14,6 +15,8 @@ use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\web\Response;
 use app\models\RefRek5Search;
+use app\models\RefRek906;
+use app\models\RefRek906Search;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -71,7 +74,7 @@ class MappingAkrualController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RefRek5Search();
+        $searchModel = new RefRek906Search();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = 50;
 
@@ -84,27 +87,29 @@ class MappingAkrualController extends Controller
             // $kdUjung = $post[$searchModel->formName()]['kd_ujung'];
             // $id_lama = $post[$searchModel->formName()]['id_lama'];
             foreach ($selections as $key => $value) {
-                $refRek5 = RefRek5::findOne(['id' => $value]);
-                $refAkrualRek = RefAkrualRek::findOne([
-                    'kd_rek_1' => $refRek5->kd_rek_1,
-                    'kd_rek_2' => $refRek5->kd_rek_2,
-                    'kd_rek_3' => $refRek5->kd_rek_3,
-                    'kd_rek_4' => $refRek5->kd_rek_4,
-                    'kd_rek_5' => $refRek5->kd_rek_5
+                $refRek6 = RefRek906::findOne(['id' => $value]);
+                $refAkrualRek = RefMappingSa::findOne([
+                    'kd_rek90_1' => $refRek6->kd_rek90_1,
+                    'kd_rek90_2' => $refRek6->kd_rek90_2,
+                    'kd_rek90_3' => $refRek6->kd_rek90_3,
+                    'kd_rek90_4' => $refRek6->kd_rek90_4,
+                    'kd_rek90_5' => $refRek6->kd_rek90_5,
+                    'kd_rek90_6' => $refRek6->kd_rek90_6
                 ]);
-                if (!$refAkrualRek) $refAkrualRek = new RefAkrualRek([
-                    'kd_rek_1' => $refRek5->kd_rek_1,
-                    'kd_rek_2' => $refRek5->kd_rek_2,
-                    'kd_rek_3' => $refRek5->kd_rek_3,
-                    'kd_rek_4' => $refRek5->kd_rek_4,
-                    'kd_rek_5' => $refRek5->kd_rek_5
+                if (!$refAkrualRek) $refAkrualRek = new RefMappingSa([
+                    'kd_rek90_1' => $refRek6->kd_rek90_1,
+                    'kd_rek90_2' => $refRek6->kd_rek90_2,
+                    'kd_rek90_3' => $refRek6->kd_rek90_3,
+                    'kd_rek90_4' => $refRek6->kd_rek90_4,
+                    'kd_rek90_5' => $refRek6->kd_rek90_5,
+                    'kd_rek90_6' => $refRek6->kd_rek90_6
                 ]);
                 $refAkrualRek->setAttributes([
-                    'kd_akrual_1' => $kd_akrual_1,
-                    'kd_akrual_2' => $kd_akrual_2,
-                    'kd_akrual_3' => $kd_akrual_3,
-                    'kd_akrual_4' => $kd_akrual_4,
-                    'kd_akrual_5' => $kd_akrual_5
+                    'kd_rek_1' => $kd_akrual_1,
+                    'kd_rek_2' => $kd_akrual_2,
+                    'kd_rek_3' => $kd_akrual_3,
+                    'kd_rek_4' => $kd_akrual_4,
+                    'kd_rek_5' => $kd_akrual_5
                 ]);
                 $refAkrualRek->save(false);
             }
@@ -153,44 +158,6 @@ class MappingAkrualController extends Controller
     }
 
     /**
-     * Creates a new RefAkrualRek model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $request = Yii::$app->request;
-        $render = 'render';
-
-        if ($request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $render = 'renderAjax';
-        }
-
-        $model = new RefAkrualRek();
-
-        $return = $this->{$render}('_form', [
-            'model' => $model,
-        ]);
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                return 1;
-            } else {
-                $return = "";
-                if ($model->errors) $return .= $this->setErrorMessage($model->errors);
-                return $return;
-            }
-        }
-        if ($request->isAjax) return [
-            'title' => "Tambah Data",
-            'content' => $return,
-            'footer' => Html::button('Close', ['class' => 'btn btn-secondary float-left', 'data-dismiss' => "modal"])
-        ];
-        return $return;
-    }
-
-    /**
      * Updates an existing RefAkrualRek model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $kd_rek_1
@@ -215,74 +182,75 @@ class MappingAkrualController extends Controller
             ->all();
         $refAkrual5ArrayList = ArrayHelper::map($queryRefAkrual5, 'rek5Code', 'rek5TextWithCode');
 
-        $refRek5 = RefRek5::findOne(['id' => $id]);
-        $kd_rek_1 = $refRek5->kd_rek_1;
-        $kd_rek_2 = $refRek5->kd_rek_2;
-        $kd_rek_3 = $refRek5->kd_rek_3;
-        $kd_rek_4 = $refRek5->kd_rek_4;
-        $kd_rek_5 = $refRek5->kd_rek_5;
+        $refRek6 = RefRek906::findOne(['id' => $id]);
+        $kd_rek_1 = $refRek6->kd_rek90_1;
+        $kd_rek_2 = $refRek6->kd_rek90_2;
+        $kd_rek_3 = $refRek6->kd_rek90_3;
+        $kd_rek_4 = $refRek6->kd_rek90_4;
+        $kd_rek_5 = $refRek6->kd_rek90_5;
+        $kd_rek_6 = $refRek6->kd_rek90_6;
 
         $rekAkrual1 = $rekAkrual2 = $rekAkrual3 = '%';
 
-        if (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.6') {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = 3;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2) == '6.1') {
-            $rekAkrual1 = 7;
-            $rekAkrual2 = 1;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2) == '6.2') {
-            $rekAkrual1 = 7;
-            $rekAkrual2 = 2;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.7') {
-            $rekAkrual1 = 6;
-            $rekAkrual2 = 1;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.8') {
-            $rekAkrual1 = 6;
-            $rekAkrual2 = 2;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.2') {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = 1;
-            $rekAkrual3 = 3;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.3') {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = 1;
-            $rekAkrual3 = 4;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.4') {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = 1;
-            $rekAkrual3 = 5;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.5') {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = 1;
-            $rekAkrual3 = 3;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.1') {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = 1;
-            $rekAkrual3 = 2;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.2') {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = 2;
-            $rekAkrual3 = 1;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.3') {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = 2;
-            $rekAkrual3 = 2;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.4') {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = 2;
-            $rekAkrual3 = 3;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.5') {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = 2;
-            $rekAkrual3 = 4;
-        } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.6') {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = 2;
-            $rekAkrual3 = 5;
-        } else {
-            $rekAkrual1 = $kd_rek_1;
-            $rekAkrual2 = $kd_rek_2;
-        }
+        // if (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.6') {
+        //     $rekAkrual1 = $kd_rek_1;
+        //     $rekAkrual2 = 3;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2) == '6.1') {
+        //     $rekAkrual1 = 7;
+        //     $rekAkrual2 = 1;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2) == '6.2') {
+        //     $rekAkrual1 = 7;
+        //     $rekAkrual2 = 2;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.7') {
+        //     $rekAkrual1 = 6;
+        //     $rekAkrual2 = 1;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.8') {
+        //     $rekAkrual1 = 6;
+        //     $rekAkrual2 = 2;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.2') {
+        //     $rekAkrual1 = $kd_rek_1;
+        //     $rekAkrual2 = 1;
+        //     $rekAkrual3 = 3;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.3') {
+        //     $rekAkrual1 = $kd_rek_1;
+        //     $rekAkrual2 = 1;
+        //     $rekAkrual3 = 4;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.4') {
+        //     $rekAkrual1 = $kd_rek_1;
+        //     $rekAkrual2 = 1;
+        //     $rekAkrual3 = 5;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.5') {
+        //     $rekAkrual1 = $kd_rek_1;
+        //     $rekAkrual2 = 1;
+        //     $rekAkrual3 = 3;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.1') {
+        //     $rekAkrual1 = $kd_rek_1;
+        //     $rekAkrual2 = 1;
+        //     $rekAkrual3 = 2;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.2') {
+        //     $rekAkrual1 = $kd_rek_1;
+        //     $rekAkrual2 = 2;
+        //     $rekAkrual3 = 1;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.3') {
+        //     $rekAkrual1 = $kd_rek_1;
+        //     $rekAkrual2 = 2;
+        //     $rekAkrual3 = 2;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.4') {
+        //     $rekAkrual1 = $kd_rek_1;
+        //     $rekAkrual2 = 2;
+        //     $rekAkrual3 = 3;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.5') {
+        //     $rekAkrual1 = $kd_rek_1;
+        //     $rekAkrual2 = 2;
+        //     $rekAkrual3 = 4;
+        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.6') {
+        //     $rekAkrual1 = $kd_rek_1;
+        //     $rekAkrual2 = 2;
+        //     $rekAkrual3 = 5;
+        // } else {
+        $rekAkrual1 = $kd_rek_1;
+        $rekAkrual2 = $kd_rek_2;
+        // }
 
         $refAkrualQuery = Yii::$app->db->createCommand("
             SELECT
@@ -304,10 +272,22 @@ class MappingAkrualController extends Controller
             ':rekAkrual3' => $rekAkrual3
         ])->queryAll();
         $refAkrualList = ArrayHelper::map($refAkrualQuery, 'rek5Code', 'rek5TextWithCode');
-
-        $model = RefAkrualRek::findOne(['kd_rek_1' => $kd_rek_1, 'kd_rek_2' => $kd_rek_2, 'kd_rek_3' => $kd_rek_3, 'kd_rek_4' => $kd_rek_4, 'kd_rek_5' => $kd_rek_5]);
-        if (!$model) $model = new RefAkrualRek(['kd_rek_1' => $kd_rek_1, 'kd_rek_2' => $kd_rek_2, 'kd_rek_3' => $kd_rek_3, 'kd_rek_4' => $kd_rek_4, 'kd_rek_5' => $kd_rek_5]);
-
+        $model = RefMappingSa::findOne([
+            'kd_rek90_1' => $refRek6->kd_rek90_1,
+            'kd_rek90_2' => $refRek6->kd_rek90_2,
+            'kd_rek90_3' => $refRek6->kd_rek90_3,
+            'kd_rek90_4' => $refRek6->kd_rek90_4,
+            'kd_rek90_5' => $refRek6->kd_rek90_5,
+            'kd_rek90_6' => $refRek6->kd_rek90_6
+        ]);
+        if (!$model) $model = new RefMappingSa([
+            'kd_rek90_1' => $refRek6->kd_rek90_1,
+            'kd_rek90_2' => $refRek6->kd_rek90_2,
+            'kd_rek90_3' => $refRek6->kd_rek90_3,
+            'kd_rek90_4' => $refRek6->kd_rek90_4,
+            'kd_rek90_5' => $refRek6->kd_rek90_5,
+            'kd_rek90_6' => $refRek6->kd_rek90_6
+        ]);
         $return = $this->{$render}('_form', [
             'model' => $model,
             'refAkrual5ArrayList' => $refAkrual5ArrayList,

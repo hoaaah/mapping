@@ -89,15 +89,15 @@ class RefAkrualRek extends \yii\db\ActiveRecord
 
     public function beforeValidate()
     {
-        if(!parent::beforeValidate()){
+        if (!parent::beforeValidate()) {
             return false;
         }
 
-        if($this->rekening_akrual && $this->rekening_akrual != '') list($this->kd_akrual_1, $this->kd_akrual_2, $this->kd_akrual_3, $this->kd_akrual_4, $this->kd_akrual_5 ) = explode(".", $this->rekening_akrual);
+        if ($this->rekening_akrual && $this->rekening_akrual != '') list($this->kd_akrual_1, $this->kd_akrual_2, $this->kd_akrual_3, $this->kd_akrual_4, $this->kd_akrual_5) = explode(".", $this->rekening_akrual);
 
-        if($this->rekening_mapping1 && $this->rekening_mapping1 != '') list($this->kd_akruald_1, $this->kd_akruald_2, $this->kd_akruald_3, $this->kd_akruald_4, $this->kd_akruald_5 ) = explode(".", $this->rekening_mapping1);
-    
-        if($this->rekening_mapping2 && $this->rekening_mapping2 != '') list($this->kd_akrualk_1, $this->kd_akrualk_2, $this->kd_akrualk_3, $this->kd_akrualk_4, $this->kd_akrualk_5 ) = explode(".", $this->rekening_mapping2);
+        if ($this->rekening_mapping1 && $this->rekening_mapping1 != '') list($this->kd_akruald_1, $this->kd_akruald_2, $this->kd_akruald_3, $this->kd_akruald_4, $this->kd_akruald_5) = explode(".", $this->rekening_mapping1);
+
+        if ($this->rekening_mapping2 && $this->rekening_mapping2 != '') list($this->kd_akrualk_1, $this->kd_akrualk_2, $this->kd_akrualk_3, $this->kd_akrualk_4, $this->kd_akrualk_5) = explode(".", $this->rekening_mapping2);
 
         return true;
     }

@@ -100,20 +100,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             ['class' => 'kartik\grid\SerialColumn'],
             [
-                'label' => 'Rekening Permendagri 13',
+                'label' => 'Rekening Permendagri 90',
                 'attribute' => 'rek5TextWithCode'
             ],
             [
                 'label' => 'Rekening Akrual',
                 'attribute' => 'refAkrualRek.mappingAkrual.rek5TextWithCode'
-            ],
-            [
-                'label' => 'Mapping 1',
-                'attribute' => 'refAkrualRek.mapping1.rek5TextWithCode'
-            ],
-            [
-                'label' => 'Mapping 2',
-                'attribute' => 'refAkrualRek.mapping2.rek5TextWithCode'
             ],
             [
                 'class' => 'kartik\grid\ActionColumn',

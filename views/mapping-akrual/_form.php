@@ -15,8 +15,6 @@ use yii\widgets\DetailView;
 
 if (!$model->isNewRecord) {
     $model->rekening_akrual = $model->mappingAkrual->rek5Code;
-    if ($model->kd_akruald_1) $model->rekening_mapping1 = $model->mapping1->rek5Code;
-    if ($model->kd_akrualk_1) $model->rekening_mapping2 = $model->mapping2->rek5Code;
 }
 ?>
 
@@ -48,7 +46,7 @@ if (!$model->isNewRecord) {
 
     <div class="row">
 
-        <div class="col-md-4">
+        <div class="col-md-12">
             <?= TabsX::widget([
                 'items' => [
                     [
@@ -78,70 +76,6 @@ if (!$model->isNewRecord) {
                 'bordered' => true,
                 'encodeLabels' => false
             ]) ?>
-        </div>
-
-        <div class="col-md-4">
-            <?= TabsX::widget([
-                'items' => [
-                    [
-                        'label' => 'Mapping 1',
-                        'content' => $form->field($model, 'rekening_mapping1')->widget(Select2::class, [
-                            'data' => $refAkrual5ArrayList,
-                            'options' => ['placeholder' => 'Mapping 1 ...'],
-                            'pluginOptions' => [
-                                'allowClear' => true,
-                                // 'minimumInputLength' => 3,
-                                // 'language' => [
-                                //     'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
-                                // ],
-                                // 'ajax' => [
-                                //     'url' => Url::to(['rekening-akrual']),
-                                //     'dataType' => 'json',
-                                //     'data' => new JsExpression('function(params) { return {q:params.term}; }')
-                                // ],
-                                // 'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                                // 'templateResult' => new JsExpression('function(city) { return city.text; }'),
-                                // 'templateSelection' => new JsExpression('function (city) { return city.text; }'),
-                            ],
-                        ])
-                    ],
-                ],
-                'position' => TabsX::POS_ABOVE,
-                'bordered' => true,
-                'encodeLabels' => false
-            ]) ?>
-        </div>
-
-        <div class="col-md-4">
-            <?= TabsX::widget([
-                'items' => [
-                    [
-                        'label' => 'Mapping 2',
-                        'content' => $form->field($model, 'rekening_mapping2')->widget(Select2::class, [
-                            'data' => $refAkrual5ArrayList,
-                            'options' => ['placeholder' => 'Mapping 2 ...'],
-                            'pluginOptions' => [
-                                'allowClear' => true,
-                                // 'minimumInputLength' => 3,
-                                // 'language' => [
-                                //     'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
-                                // ],
-                                // 'ajax' => [
-                                //     'url' => Url::to(['rekening-akrual']),
-                                //     'dataType' => 'json',
-                                //     'data' => new JsExpression('function(params) { return {q:params.term}; }')
-                                // ],
-                                // 'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                                // 'templateResult' => new JsExpression('function(city) { return city.text; }'),
-                                // 'templateSelection' => new JsExpression('function (city) { return city.text; }'),
-                            ],
-                        ])
-                    ],
-                ],
-                'position' => TabsX::POS_ABOVE,
-                'bordered' => true,
-                'encodeLabels' => false
-            ])  ?>
         </div>
     </div>
 

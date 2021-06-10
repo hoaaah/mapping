@@ -19,6 +19,7 @@ use app\models\RefRek5Search;
 use app\models\RefRek906;
 use app\models\RefRek906Search;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 /**
  * MappingAkrualController implements the CRUD actions for RefAkrualRek model.
@@ -46,7 +47,7 @@ class MappingAkrualController extends Controller
 
     public function actionRekAkrualList($q = null, $id = null)
     {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::$app->response->format = Response::FORMAT_JSON;
         $out = ['results' => ['id' => '', 'text' => '']];
         if (!is_null($q)) {
 
@@ -82,6 +83,7 @@ class MappingAkrualController extends Controller
         if (Yii::$app->request->post()) {
             $post = Yii::$app->request->post();
             // return var_dump($post);
+            if (!isset($post['selection'])) return $this->redirect(Yii::$app->request->referrer);
             (array) $selections = $post['selection'];
             $kodeAkrual = $post[$searchModel->formName()]['kode_akrual'];
             list($kd_rek90_1, $kd_rek90_2, $kd_rek90_3, $kd_rek90_4, $kd_rek90_5, $kd_rek90_6) = explode('.', $kodeAkrual);

@@ -2,6 +2,7 @@
 
 use hoaaah\sbadmin2\widgets\Card;
 use kartik\select2\Select2;
+use kartik\switchinput\SwitchInput;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\tabs\TabsX;
@@ -25,7 +26,7 @@ if (!$model->isNewRecord) {
     <?= TabsX::widget([
         'items' => [
             [
-                'label' => 'Rekening Modifikasi 90',
+                'label' => 'Rekening Permendagri 64',
                 'content' => DetailView::widget([
                     'model' => $model,
                     'attributes' => [
@@ -78,6 +79,8 @@ if (!$model->isNewRecord) {
             ]) ?>
         </div>
     </div>
+
+    <?php $form->field($model, 'dirinci')->widget(SwitchInput::class, []) ?>
 
     <div class="form-group">
         <?= Html::submitButton('<i class="fas fa-plus"></i>  Simpan', ['id' => 'submit-button', 'class' => 'btn btn-primary']) ?>

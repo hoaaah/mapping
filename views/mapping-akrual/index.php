@@ -7,11 +7,13 @@ use kartik\growl\GrowlAsset;
 use johnitvn\ajaxcrud\CrudAsset;
 use kartik\form\ActiveForm;
 use kartik\select2\Select2;
+use kartik\switchinput\SwitchInputAsset;
 use yii\web\JsExpression;
 
 //  GrowlAsset will register to this view, so it will not load every ajax given.
 GrowlAsset::register($this);
 CrudAsset::register($this);
+SwitchInputAsset::register($this);
 
 $url = \yii\helpers\Url::to(['rek-akrual-list']);
 

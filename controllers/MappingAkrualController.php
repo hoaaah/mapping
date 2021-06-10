@@ -202,65 +202,38 @@ class MappingAkrualController extends Controller
 
         $rekAkrual1 = $rekAkrual2 = $rekAkrual3 = '%';
 
-        // if (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.6') {
-        //     $rekAkrual1 = $kd_rek_1;
-        //     $rekAkrual2 = 3;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2) == '6.1') {
-        //     $rekAkrual1 = 7;
-        //     $rekAkrual2 = 1;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2) == '6.2') {
-        //     $rekAkrual1 = 7;
-        //     $rekAkrual2 = 2;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.7') {
-        //     $rekAkrual1 = 6;
-        //     $rekAkrual2 = 1;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.8') {
-        //     $rekAkrual1 = 6;
-        //     $rekAkrual2 = 2;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.2') {
-        //     $rekAkrual1 = $kd_rek_1;
-        //     $rekAkrual2 = 1;
-        //     $rekAkrual3 = 3;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.3') {
-        //     $rekAkrual1 = $kd_rek_1;
-        //     $rekAkrual2 = 1;
-        //     $rekAkrual3 = 4;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.4') {
-        //     $rekAkrual1 = $kd_rek_1;
-        //     $rekAkrual2 = 1;
-        //     $rekAkrual3 = 5;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.1.5') {
-        //     $rekAkrual1 = $kd_rek_1;
-        //     $rekAkrual2 = 1;
-        //     $rekAkrual3 = 3;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.1') {
-        //     $rekAkrual1 = $kd_rek_1;
-        //     $rekAkrual2 = 1;
-        //     $rekAkrual3 = 2;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.2') {
-        //     $rekAkrual1 = $kd_rek_1;
-        //     $rekAkrual2 = 2;
-        //     $rekAkrual3 = 1;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.3') {
-        //     $rekAkrual1 = $kd_rek_1;
-        //     $rekAkrual2 = 2;
-        //     $rekAkrual3 = 2;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.4') {
-        //     $rekAkrual1 = $kd_rek_1;
-        //     $rekAkrual2 = 2;
-        //     $rekAkrual3 = 3;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.5') {
-        //     $rekAkrual1 = $kd_rek_1;
-        //     $rekAkrual2 = 2;
-        //     $rekAkrual3 = 4;
-        // } elseif (($kd_rek_1 . '.' . $kd_rek_2 . '.' . $kd_rek_3) == '5.2.6') {
-        //     $rekAkrual1 = $kd_rek_1;
-        //     $rekAkrual2 = 2;
-        //     $rekAkrual3 = 5;
-        // } else {
-        $rekAkrual1 = $kd_rek_1;
-        $rekAkrual2 = $kd_rek_2;
-        // }
+        if (($kd_akrual_1 . '.' . $kd_akrual_2) == '6.1') {
+            $rekAkrual1 = 5;
+            $rekAkrual2 = 4;
+        } elseif (($kd_akrual_1 . '.' . $kd_akrual_2) == '6.2') {
+            $rekAkrual1 = 5;
+            $rekAkrual2 = 4;
+        } elseif (($kd_akrual_1) == '7') {
+            $rekAkrual1 = 6;
+            $rekAkrual2 = $kd_akrual_2;
+        } elseif (($kd_akrual_1 . '.' . $kd_akrual_2) == '8.4') {
+            $rekAkrual1 = 7;
+        } elseif (($kd_akrual_1 . '.' . $kd_akrual_2) == '8.5') {
+            $rekAkrual1 = 7;
+        } elseif (($kd_akrual_1 . '.' . $kd_akrual_2) != '8.4' && ($kd_akrual_1 . '.' . $kd_akrual_2) != '8.5' && $kd_akrual_1 == 8) {
+            $rekAkrual1 = 7;
+            $rekAkrual2 = $kd_akrual_2;
+        } elseif (($kd_akrual_1 . '.' . $kd_akrual_2) == '9.1') {
+            $rekAkrual1 = 8;
+            // $rekAkrual2 = 1;
+        } elseif (($kd_akrual_1 . '.' . $kd_akrual_2) == '9.2') {
+            $rekAkrual1 = 8;
+            $rekAkrual2 = 3;
+        } elseif (($kd_akrual_1 . '.' . $kd_akrual_2) == '9.3') {
+            $rekAkrual1 = 8;
+            $rekAkrual2 = 5;
+        } elseif (($kd_akrual_1 . '.' . $kd_akrual_2) == '9.4') {
+            $rekAkrual1 = 8;
+            // $rekAkrual2 = 5;
+        } else {
+            $rekAkrual1 = $kd_rek_1;
+            $rekAkrual2 = $kd_rek_2;
+        }
 
         $refAkrualQuery = Yii::$app->db->createCommand("
             SELECT

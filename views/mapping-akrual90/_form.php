@@ -14,7 +14,7 @@ use yii\widgets\DetailView;
 /* @var $form yii\widgets\ActiveForm */
 
 if (!$model->isNewRecord) {
-    $model->rekening90 = $model->refRek5->rek5Code;
+    $model->rekening_akrual = $model->mappingAkrual->rek5Code;
 }
 ?>
 
@@ -30,9 +30,9 @@ if (!$model->isNewRecord) {
                     'model' => $model,
                     'attributes' => [
                         [
-                            'label' => 'Rekening Permendagri 64',
+                            'label' => 'Rekening Permendagri 13',
                             'value' => function ($model) {
-                                return $model->mappingAkrual->rek5TextWithCode;
+                                return $model->refRek5->rek5TextWithCode;
                             }
                         ]
                     ],
@@ -50,10 +50,10 @@ if (!$model->isNewRecord) {
             <?= TabsX::widget([
                 'items' => [
                     [
-                        'label' => 'Rekening 90',
-                        'content' => $form->field($model, 'rekening90')->widget(Select2::class, [
+                        'label' => 'Rekening Akrual',
+                        'content' => $form->field($model, 'rekening_akrual')->widget(Select2::class, [
                             'data' => $refAkrualList,
-                            'options' => ['placeholder' => 'Rekening 90 ...'],
+                            'options' => ['placeholder' => 'Rekening Akrual ...'],
                             'pluginOptions' => [
                                 'allowClear' => true,
                                 // 'minimumInputLength' => 3,

@@ -22,7 +22,7 @@ use Yii;
 class RefMappingSa extends \yii\db\ActiveRecord
 {
 
-    public $rekening_akrual, $rekening_mapping1, $rekening_mapping2;
+    public $rekening_akrual, $rekening_mapping1, $rekening_mapping2, $rekening90;
     /**
      * {@inheritdoc}
      */
@@ -38,9 +38,9 @@ class RefMappingSa extends \yii\db\ActiveRecord
     {
         return [
             [['kd_rek90_1', 'kd_rek90_2', 'kd_rek90_3', 'kd_rek90_4', 'kd_rek90_5', 'kd_rek90_6'], 'required'],
-            [['rekening_akrual', 'rekening_mapping1', 'rekening_mapping2'], 'string'],
+            [['rekening_akrual', 'rekening_mapping1', 'rekening_mapping2', 'rekening90'], 'string'],
             [['kd_rek90_1', 'kd_rek90_2', 'kd_rek90_3', 'kd_rek90_4', 'kd_rek90_5', 'kd_rek90_6', 'kd_rek_1', 'kd_rek_2', 'kd_rek_3', 'kd_rek_4', 'kd_rek_5'], 'integer'],
-            [['kd_rek90_1', 'kd_rek90_2', 'kd_rek90_3', 'kd_rek90_4', 'kd_rek90_5', 'kd_rek90_6'], 'unique', 'targetAttribute' => ['kd_rek90_1', 'kd_rek90_2', 'kd_rek90_3', 'kd_rek90_4', 'kd_rek90_5', 'kd_rek90_6']],
+            // [['kd_rek90_1', 'kd_rek90_2', 'kd_rek90_3', 'kd_rek90_4', 'kd_rek90_5', 'kd_rek90_6'], 'unique', 'targetAttribute' => ['kd_rek90_1', 'kd_rek90_2', 'kd_rek90_3', 'kd_rek90_4', 'kd_rek90_5', 'kd_rek90_6']],
         ];
     }
 
@@ -71,6 +71,7 @@ class RefMappingSa extends \yii\db\ActiveRecord
         }
 
         if ($this->rekening_akrual && $this->rekening_akrual != '') list($this->kd_rek_1, $this->kd_rek_2, $this->kd_rek_3, $this->kd_rek_4, $this->kd_rek_5) = explode(".", $this->rekening_akrual);
+        if ($this->rekening90 && $this->rekening90 != '') list($this->kd_rek90_1, $this->kd_rek90_2, $this->kd_rek90_3, $this->kd_rek90_4, $this->kd_rek90_5, $this->kd_rek90_6) = explode('.', $this->rekening90);
 
         return true;
     }

@@ -100,12 +100,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             ['class' => 'kartik\grid\SerialColumn'],
             [
-                'label' => 'Rekening Permendagri 64',
+                'label' => 'Rekening Permendagri 90',
                 'attribute' => 'rek5TextWithCode'
             ],
             [
-                'label' => 'Rekening 90',
-                'attribute' => 'refMappingSa.refRek5.rek5TextWithCode'
+                'label' => 'Rekening Akrual',
+                'attribute' => 'refAkrualRek.mappingAkrual.rek5TextWithCode'
             ],
             [
                 'class' => 'kartik\grid\ActionColumn',
@@ -114,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'vAlign' => 'top',
                 'visibleButtons' => [
                     'delete' => function ($model) {
-                        if (!$model->refMappingSa) return false;
+                        if (!$model->refAkrualRek) return false;
                         return true;
                     }
                 ],

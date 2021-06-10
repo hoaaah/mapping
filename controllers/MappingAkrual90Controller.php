@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use app\models\ModulesFactory;
 use app\models\RefAkrual5;
-use app\models\RefAkrual5Search;
 use Yii;
 use app\models\RefAkrualRek;
 use app\models\RefAkrualRekSearch;
@@ -23,7 +22,7 @@ use yii\helpers\ArrayHelper;
 /**
  * MappingAkrualController implements the CRUD actions for RefAkrualRek model.
  */
-class MappingAkrualController extends Controller
+class MappingAkrual90Controller extends Controller
 {
 
     private $_menu;
@@ -54,17 +53,17 @@ class MappingAkrualController extends Controller
                 SELECT * FROM
                 (
                     SELECT
-                    CONCAT(kd_rek90_1, '.', kd_rek90_2, '.', kd_rek90_3, '.', kd_rek90_4, '.', kd_rek90_5, '.', kd_rek90_6) AS id, 
-                    CONCAT(kd_rek90_1, '.', kd_rek90_2, '.', kd_rek90_3, '.', kd_rek90_4, '.', kd_rek90_5, '.', kd_rek90_6, ' ', nm_rek90_6) AS text
-                    FROM ref_rek90_6
+                    CONCAT(kd_akrual_1, '.', kd_akrual_2, '.', kd_akrual_3, '.', kd_akrual_4, '.', kd_akrual_5) AS id, 
+                    CONCAT(kd_akrual_1, '.', kd_akrual_2, '.', kd_akrual_3, '.', kd_akrual_4, '.', kd_akrual_5, ' ', nm_akrual_5) AS text
+                    FROM ref_akrual_5
                 ) a 
                 WHERE text LIKE :q
             ", [':q' => "%{$q}%"]);
             $data = $query->queryAll();
             $out['results'] = array_values($data);
         } elseif ($id > 0) {
-            list($kd_rek90_1, $kd_rek90_2, $kd_rek90_3, $kd_rek90_4, $kd_rek90_5, $kd_rek90_6) = explode('.', $id);
-            $out['results'] = ['id' => $id, 'text' => RefRek906::findOne(['kd_rek90_1' => $kd_rek90_1, 'kd_rek90_2' => $kd_rek90_2, 'kd_rek90_3' => $kd_rek90_3, 'kd_rek90_4' => $kd_rek90_4, 'kd_rek90_5' => $kd_rek90_5, 'kd_rek90_6' => $kd_rek90_6])->nm_rek90_6];
+            list($kd_akrual_1, $kd_akrual_2, $kd_akrual_3, $kd_akrual_4, $kd_akrual_5) = explode('.', $id);
+            $out['results'] = ['id' => $id, 'text' => RefAkrual5::findOne(['kd_akrual_1' => $kd_akrual_1, 'kd_akrual_2' => $kd_akrual_2, 'kd_akrual_3' => $kd_akrual_3, 'kd_akrual_4' => $kd_akrual_4, 'kd_akrual_5' => $kd_akrual_5])->nm_akrual_5];
         }
         return $out;
     }
@@ -75,7 +74,7 @@ class MappingAkrualController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RefAkrual5Search();
+        $searchModel = new RefRek906Search();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = 50;
 
@@ -84,37 +83,33 @@ class MappingAkrualController extends Controller
             // return var_dump($post);
             (array) $selections = $post['selection'];
             $kodeAkrual = $post[$searchModel->formName()]['kode_akrual'];
-            list($kd_rek90_1, $kd_rek90_2, $kd_rek90_3, $kd_rek90_4, $kd_rek90_5, $kd_rek90_6) = explode('.', $kodeAkrual);
+            list($kd_akrual_1, $kd_akrual_2, $kd_akrual_3, $kd_akrual_4, $kd_akrual_5) = explode('.', $kodeAkrual);
             // $kdUjung = $post[$searchModel->formName()]['kd_ujung'];
             // $id_lama = $post[$searchModel->formName()]['id_lama'];
             foreach ($selections as $key => $value) {
-                $valueDecoded = (json_decode($value));
-                $kd_akrual_1 = $valueDecoded->kd_akrual_1;
-                $kd_akrual_2 = $valueDecoded->kd_akrual_2;
-                $kd_akrual_3 = $valueDecoded->kd_akrual_3;
-                $kd_akrual_4 = $valueDecoded->kd_akrual_4;
-                $kd_akrual_5 = $valueDecoded->kd_akrual_5;
+                $refRek6 = RefRek906::findOne(['id' => $value]);
                 $refAkrualRek = RefMappingSa::findOne([
-                    'kd_rek_1' => $kd_akrual_1,
-                    'kd_rek_2' => $kd_akrual_2,
-                    'kd_rek_3' => $kd_akrual_3,
-                    'kd_rek_4' => $kd_akrual_4,
-                    'kd_rek_5' => $kd_akrual_5,
+                    'kd_rek90_1' => $refRek6->kd_rek90_1,
+                    'kd_rek90_2' => $refRek6->kd_rek90_2,
+                    'kd_rek90_3' => $refRek6->kd_rek90_3,
+                    'kd_rek90_4' => $refRek6->kd_rek90_4,
+                    'kd_rek90_5' => $refRek6->kd_rek90_5,
+                    'kd_rek90_6' => $refRek6->kd_rek90_6
                 ]);
                 if (!$refAkrualRek) $refAkrualRek = new RefMappingSa([
+                    'kd_rek90_1' => $refRek6->kd_rek90_1,
+                    'kd_rek90_2' => $refRek6->kd_rek90_2,
+                    'kd_rek90_3' => $refRek6->kd_rek90_3,
+                    'kd_rek90_4' => $refRek6->kd_rek90_4,
+                    'kd_rek90_5' => $refRek6->kd_rek90_5,
+                    'kd_rek90_6' => $refRek6->kd_rek90_6
+                ]);
+                $refAkrualRek->setAttributes([
                     'kd_rek_1' => $kd_akrual_1,
                     'kd_rek_2' => $kd_akrual_2,
                     'kd_rek_3' => $kd_akrual_3,
                     'kd_rek_4' => $kd_akrual_4,
-                    'kd_rek_5' => $kd_akrual_5,
-                ]);
-                $refAkrualRek->setAttributes([
-                    'kd_rek90_1' => $kd_rek90_1,
-                    'kd_rek90_2' => $kd_rek90_2,
-                    'kd_rek90_3' => $kd_rek90_3,
-                    'kd_rek90_4' => $kd_rek90_4,
-                    'kd_rek90_5' => $kd_rek90_5,
-                    'kd_rek90_6' => $kd_rek90_6
+                    'kd_rek_5' => $kd_akrual_5
                 ]);
                 $refAkrualRek->save(false);
             }
@@ -172,7 +167,7 @@ class MappingAkrualController extends Controller
      * @param integer $kd_rek_5
      * @return mixed
      */
-    public function actionUpdate($kd_akrual_1, $kd_akrual_2, $kd_akrual_3, $kd_akrual_4, $kd_akrual_5)
+    public function actionUpdate($id)
     {
         $request = Yii::$app->request;
         $render = 'render';
@@ -182,23 +177,18 @@ class MappingAkrualController extends Controller
             $render = 'renderAjax';
         }
 
-        $queryRefAkrual5 = RefRek906::find()
+        $queryRefAkrual5 = RefAkrual5::find()
             ->where('1 = 0')
             ->all();
         $refAkrual5ArrayList = ArrayHelper::map($queryRefAkrual5, 'rek5Code', 'rek5TextWithCode');
 
-        $refRek6 = RefAkrual5::findOne([
-            'kd_akrual_1' => $kd_akrual_1,
-            'kd_akrual_2' => $kd_akrual_2,
-            'kd_akrual_3' => $kd_akrual_3,
-            'kd_akrual_4' => $kd_akrual_4,
-            'kd_akrual_5' => $kd_akrual_5
-        ]);
-        $kd_rek_1 = $refRek6->kd_akrual_1;
-        $kd_rek_2 = $refRek6->kd_akrual_2;
-        $kd_rek_3 = $refRek6->kd_akrual_3;
-        $kd_rek_4 = $refRek6->kd_akrual_4;
-        $kd_rek_5 = $refRek6->kd_akrual_5;
+        $refRek6 = RefRek906::findOne(['id' => $id]);
+        $kd_rek_1 = $refRek6->kd_rek90_1;
+        $kd_rek_2 = $refRek6->kd_rek90_2;
+        $kd_rek_3 = $refRek6->kd_rek90_3;
+        $kd_rek_4 = $refRek6->kd_rek90_4;
+        $kd_rek_5 = $refRek6->kd_rek90_5;
+        $kd_rek_6 = $refRek6->kd_rek90_6;
 
         $rekAkrual1 = $rekAkrual2 = $rekAkrual3 = '%';
 
@@ -264,37 +254,39 @@ class MappingAkrualController extends Controller
 
         $refAkrualQuery = Yii::$app->db->createCommand("
             SELECT
-            a.kd_rek90_1, a.kd_rek90_2, a.kd_rek90_3, a.kd_rek90_4, a.kd_rek90_5,
-            CONCAT(a.kd_rek90_1, '.', a.kd_rek90_2, '.', a.kd_rek90_3, '.', a.kd_rek90_4, '.', a.kd_rek90_5, '.', a.kd_rek90_6) AS rek5Code,
-            CONCAT(a.kd_rek90_1, '.', a.kd_rek90_2, '.', a.kd_rek90_3, '.', a.kd_rek90_4, '.', a.kd_rek90_5, '.', a.kd_rek90_6, ' ', b.nm_rek90_4, ' - ', a.nm_rek90_6) AS rek5TextWithCode
-            FROM ref_rek90_6 a
-            LEFT JOIN ref_rek90_4 b ON 
-            a.kd_rek90_1 = b.kd_rek90_1 AND
-            a.kd_rek90_2 = b.kd_rek90_2 AND
-            a.kd_rek90_3 = b.kd_rek90_3 AND
-            a.kd_rek90_4 = b.kd_rek90_4
-            WHERE a.kd_rek90_1 LIKE :rekAkrual1
-            AND a.kd_rek90_2 LIKE :rekAkrual2
-            -- AND a.kd_rek90_3 LIKE :rekAkrual3
+            a.kd_akrual_1, a.kd_akrual_2, a.kd_akrual_3, a.kd_akrual_4, a.kd_akrual_5,
+            CONCAT(a.kd_akrual_1, '.', a.kd_akrual_2, '.', a.kd_akrual_3, '.', a.kd_akrual_4, '.', a.kd_akrual_5) AS rek5Code,
+            CONCAT(a.kd_akrual_1, '.', a.kd_akrual_2, '.', a.kd_akrual_3, '.', a.kd_akrual_4, '.', a.kd_akrual_5, ' ', b.nm_akrual_4, ' - ', a.nm_akrual_5) AS rek5TextWithCode
+            FROM ref_akrual_5 a
+            LEFT JOIN ref_akrual_4 b ON 
+            a.kd_akrual_1 = b.kd_akrual_1 AND
+            a.kd_akrual_2 = b.kd_akrual_2 AND
+            a.kd_akrual_3 = b.kd_akrual_3 AND
+            a.kd_akrual_4 = b.kd_akrual_4
+            WHERE a.kd_akrual_1 LIKE :rekAkrual1
+            AND a.kd_akrual_2 LIKE :rekAkrual2
+            AND a.kd_akrual_3 LIKE :rekAkrual3
         ", [
             ':rekAkrual1' => $rekAkrual1,
             ':rekAkrual2' => $rekAkrual2,
-            // ':rekAkrual3' => $rekAkrual3
+            ':rekAkrual3' => $rekAkrual3
         ])->queryAll();
         $refAkrualList = ArrayHelper::map($refAkrualQuery, 'rek5Code', 'rek5TextWithCode');
         $model = RefMappingSa::findOne([
-            'kd_rek_1' => $refRek6->kd_akrual_1,
-            'kd_rek_2' => $refRek6->kd_akrual_2,
-            'kd_rek_3' => $refRek6->kd_akrual_3,
-            'kd_rek_4' => $refRek6->kd_akrual_4,
-            'kd_rek_5' => $refRek6->kd_akrual_5
+            'kd_rek90_1' => $refRek6->kd_rek90_1,
+            'kd_rek90_2' => $refRek6->kd_rek90_2,
+            'kd_rek90_3' => $refRek6->kd_rek90_3,
+            'kd_rek90_4' => $refRek6->kd_rek90_4,
+            'kd_rek90_5' => $refRek6->kd_rek90_5,
+            'kd_rek90_6' => $refRek6->kd_rek90_6
         ]);
         if (!$model) $model = new RefMappingSa([
-            'kd_rek_1' => $refRek6->kd_akrual_1,
-            'kd_rek_2' => $refRek6->kd_akrual_2,
-            'kd_rek_3' => $refRek6->kd_akrual_3,
-            'kd_rek_4' => $refRek6->kd_akrual_4,
-            'kd_rek_5' => $refRek6->kd_akrual_5
+            'kd_rek90_1' => $refRek6->kd_rek90_1,
+            'kd_rek90_2' => $refRek6->kd_rek90_2,
+            'kd_rek90_3' => $refRek6->kd_rek90_3,
+            'kd_rek90_4' => $refRek6->kd_rek90_4,
+            'kd_rek90_5' => $refRek6->kd_rek90_5,
+            'kd_rek90_6' => $refRek6->kd_rek90_6
         ]);
         $return = $this->{$render}('_form', [
             'model' => $model,
@@ -324,7 +316,7 @@ class MappingAkrualController extends Controller
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $out = ['results' => ['id' => '', 'text' => '']];
         if (!is_null($q)) {
-            $query = RefAkrual5::find()->where("nm_rek90_6 LIKE '%:q%'", [':q' => $q])->all();
+            $query = RefAkrual5::find()->where("nm_akrual_5 LIKE '%:q%'", [':q' => $q])->all();
             $data = ArrayHelper::map($query, 'rek5Code', 'rek5TextWithCode');
             // $query = new Query;
             // $query->select('id, name AS text')

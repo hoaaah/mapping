@@ -61,6 +61,13 @@ class RefRek906 extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getRek5Code()
+    {
+        return $this->kd_rek90_1 . '.' . $this->kd_rek90_2 . '.' . $this->kd_rek90_3 . '.' . $this->kd_rek90_4 . '.' . $this->kd_rek90_5 . '.' . $this->kd_rek90_6;
+        return $this->kd_rek90_1 . '.' . $this->kd_rek90_2 . '.' . substr("00" . $this->kd_rek90_3, -2) . '.' . substr("00" . $this->kd_rek90_4, -2) . '.' . substr("00" . $this->kd_rek90_5, -2) . '.' . substr("000" . $this->kd_rek90_6, -3);
+    }
+
+
     public function getRek5TextWithCode()
     {
         return $this->kd_rek90_1 . '.' . $this->kd_rek90_2 . '.' . substr("00" . $this->kd_rek90_3, -2) . '.' . substr("00" . $this->kd_rek90_4, -2) . '.' . substr("00" . $this->kd_rek90_5, -2) . '.' . substr("000" . $this->kd_rek90_6, -3) . ' ' . $this->nm_rek90_6;

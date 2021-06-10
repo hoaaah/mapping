@@ -22,19 +22,19 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'kd_akrual_1')->textInput() ?>
+        <?= $form->field($model, 'kd_rek90_1')->textInput() ?>
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'kd_akrual_2')->textInput() ?>
+        <?= $form->field($model, 'kd_rek90_2')->textInput() ?>
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'kd_akrual_3')->textInput() ?>
+        <?= $form->field($model, 'kd_rek90_3')->textInput() ?>
     </div>
 
     <div class="col-md-3">
-        <?= $form->field($model, 'nm_akrual_5')->textInput() ?>
+        <?= $form->field($model, 'nm_rek90_6')->textInput() ?>
     </div>
 
     <div class="form-group">

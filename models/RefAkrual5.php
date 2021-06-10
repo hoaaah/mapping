@@ -20,6 +20,9 @@ use Yii;
  */
 class RefAkrual5 extends \yii\db\ActiveRecord
 {
+
+    public $kd_ujung, $tambah_sisip, $kode_akrual, $kode_mapping_1, $kode_mapping_2;
+
     /**
      * {@inheritdoc}
      */
@@ -35,8 +38,8 @@ class RefAkrual5 extends \yii\db\ActiveRecord
     {
         return [
             [['kd_akrual_1', 'kd_akrual_2', 'kd_akrual_3', 'kd_akrual_4', 'kd_akrual_5', 'nm_akrual_5'], 'required'],
-            [['kd_akrual_1', 'kd_akrual_2', 'kd_akrual_3', 'kd_akrual_4', 'kd_akrual_5'], 'integer'],
-            [['nm_akrual_5'], 'string', 'max' => 255],
+            [['kd_akrual_1', 'kd_akrual_2', 'kd_akrual_3', 'kd_akrual_4', 'kd_akrual_5', 'tambah_sisip'], 'integer'],
+            [['nm_akrual_5', 'kd_ujung', 'kode_akrual', 'kode_mapping_1', 'kode_mapping_2'], 'string', 'max' => 255],
             [['peraturan'], 'string', 'max' => 50],
             [['kd_akrual_1', 'kd_akrual_2', 'kd_akrual_3', 'kd_akrual_4', 'kd_akrual_5'], 'unique', 'targetAttribute' => ['kd_akrual_1', 'kd_akrual_2', 'kd_akrual_3', 'kd_akrual_4', 'kd_akrual_5']],
             [['kd_akrual_1', 'kd_akrual_2', 'kd_akrual_3', 'kd_akrual_4'], 'exist', 'skipOnError' => true, 'targetClass' => RefAkrual4::className(), 'targetAttribute' => ['kd_akrual_1' => 'kd_akrual_1', 'kd_akrual_2' => 'kd_akrual_2', 'kd_akrual_3' => 'kd_akrual_3', 'kd_akrual_4' => 'kd_akrual_4']],
@@ -59,11 +62,13 @@ class RefAkrual5 extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getRek5Code(){
+    public function getRek5Code()
+    {
         return $this->kd_akrual_1 . '.' . $this->kd_akrual_2 . '.' . substr("00" . $this->kd_akrual_3, -2) . '.' . substr("00" . $this->kd_akrual_4, -2) . '.' . substr("000" . $this->kd_akrual_5, -3);
     }
 
-    public function getRek5TextWithCode(){
+    public function getRek5TextWithCode()
+    {
         return $this->kd_akrual_1 . '.' . $this->kd_akrual_2 . '.' . substr("00" . $this->kd_akrual_3, -2) . '.' . substr("00" . $this->kd_akrual_4, -2) . '.' . substr("000" . $this->kd_akrual_5, -3) . ' ' . $this->nm_akrual_5;
     }
 
@@ -86,5 +91,10 @@ class RefAkrual5 extends \yii\db\ActiveRecord
     public function getRefAkrualReks()
     {
         return $this->hasMany(RefAkrualRek::className(), ['kd_akrual_1' => 'kd_akrual_1', 'kd_akrual_2' => 'kd_akrual_2', 'kd_akrual_3' => 'kd_akrual_3', 'kd_akrual_4' => 'kd_akrual_4', 'kd_akrual_5' => 'kd_akrual_5']);
+    }
+
+    public function getRefMappingSa()
+    {
+        return $this->hasOne(RefMappingSa::class, ['kd_rek_1' => 'kd_akrual_1', 'kd_rek_2' => 'kd_akrual_2', 'kd_rek_3' => 'kd_akrual_3', 'kd_rek_4' => 'kd_akrual_4', 'kd_rek_5' => 'kd_akrual_5']);
     }
 }

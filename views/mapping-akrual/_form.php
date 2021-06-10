@@ -80,7 +80,7 @@ if (!$model->isNewRecord) {
         </div>
     </div>
 
-    <?php $form->field($model, 'dirinci')->widget(SwitchInput::class, []) ?>
+    <?= $form->field($model, 'dirinci')->widget(SwitchInput::class, []) ?>
 
     <div class="form-group">
         <?= Html::submitButton('<i class="fas fa-plus"></i>  Simpan', ['id' => 'submit-button', 'class' => 'btn btn-primary']) ?>

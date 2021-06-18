@@ -70,11 +70,16 @@ class RefRek906 extends \yii\db\ActiveRecord
 
     public function getRek5TextWithCode()
     {
-        return $this->kd_rek90_1 . '.' . $this->kd_rek90_2 . '.' . substr("00" . $this->kd_rek90_3, -2) . '.' . substr("00" . $this->kd_rek90_4, -2) . '.' . substr("00" . $this->kd_rek90_5, -2) . '.' . substr("000" . $this->kd_rek90_6, -3) . ' ' . $this->nm_rek90_6;
+        return $this->kd_rek90_1 . '.' . $this->kd_rek90_2 . '.' . substr("00" . $this->kd_rek90_3, -2) . '.' . substr("00" . $this->kd_rek90_4, -2) . '.' . substr("00" . $this->kd_rek90_5, -2) . '.' . substr("000" . $this->kd_rek90_6, -3) . ' ' . $this->refRek905->nm_rek90_5 . ' - ' . $this->nm_rek90_6;
     }
 
     public function getRefAkrualRek()
     {
         return $this->hasOne(RefMappingSa::class, ['kd_rek90_1' => 'kd_rek90_1', 'kd_rek90_2' => 'kd_rek90_2', 'kd_rek90_3' => 'kd_rek90_3', 'kd_rek90_4' => 'kd_rek90_4', 'kd_rek90_5' => 'kd_rek90_5', 'kd_rek90_6' => 'kd_rek90_6']);
+    }
+
+    public function getRefRek905()
+    {
+        return $this->hasOne(RefRek905::class, ['kd_rek90_1' => 'kd_rek90_1', 'kd_rek90_2' => 'kd_rek90_2', 'kd_rek90_3' => 'kd_rek90_3', 'kd_rek90_4' => 'kd_rek90_4', 'kd_rek90_5' => 'kd_rek90_5']);
     }
 }

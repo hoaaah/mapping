@@ -69,7 +69,7 @@ class RefAkrual5 extends \yii\db\ActiveRecord
 
     public function getRek5TextWithCode()
     {
-        return $this->kd_akrual_1 . '.' . $this->kd_akrual_2 . '.' . substr("00" . $this->kd_akrual_3, -2) . '.' . substr("00" . $this->kd_akrual_4, -2) . '.' . substr("000" . $this->kd_akrual_5, -3) . ' ' . $this->nm_akrual_5;
+        return $this->kd_akrual_1 . '.' . $this->kd_akrual_2 . '.' . substr("00" . $this->kd_akrual_3, -2) . '.' . substr("00" . $this->kd_akrual_4, -2) . '.' . substr("000" . $this->kd_akrual_5, -3) . ' ' . $this->refAkrual4->nm_akrual_4  . ' - ' . $this->nm_akrual_5;
     }
 
 
@@ -78,7 +78,7 @@ class RefAkrual5 extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getKdAkrual1()
+    public function getRefAkrual4()
     {
         return $this->hasOne(RefAkrual4::className(), ['kd_akrual_1' => 'kd_akrual_1', 'kd_akrual_2' => 'kd_akrual_2', 'kd_akrual_3' => 'kd_akrual_3', 'kd_akrual_4' => 'kd_akrual_4']);
     }
